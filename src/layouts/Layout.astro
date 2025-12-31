@@ -1,0 +1,21 @@
+---
+import "../styles/global.css";
+---
+
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <div class="min-h-screen flex flex-col items-center justify-center p-8 font-sans">
+      <main class="flex flex-col max-w-4xl w-full">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
