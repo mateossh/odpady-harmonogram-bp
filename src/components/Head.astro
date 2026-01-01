@@ -1,8 +1,7 @@
 ---
-const { title = "Datownik", ...props } = Astro.props;
+const { title = "Harmonogram odbioru odpadów na terenie gminy Boguty-Pianki", ...props } = Astro.props;
 
 const description = "lorem ipsum dolor sit amet sie zmieni to"
-
 const keywords = ["jakies", "keywordy"].join(",");
 
 const jsonLd = {
@@ -65,18 +64,15 @@ const jsonLd = {
 <meta property="og:locale" content="pl_PL" />
 <meta property="og:type" content="website" />
 
+<meta property="og:image" content="og.webp" />
+<!-- <meta property="og:image:alt" content="" /> -->
 
 <!-- Twitter tags -->
-<meta property="twitter:card" content="" />
-<meta property="twitter:creator" content="" />
-<meta property="twitter:title" content="" />
+<meta property="twitter:card" content="summary" />
+<meta property="twitter:creator" content="@mateossh" />
+<meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 
-<!-- <meta
-  property="og:image"
-  content="https://www.example.com/_astro/seo-banner.BZD7kegZ.webp"
-/> -->
-<!-- <meta property="og:image:alt" content="" /> -->
 
 <script
   type="application/ld+json"
