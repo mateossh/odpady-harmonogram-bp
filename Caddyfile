@@ -1,10 +1,9 @@
-#{
-#  auto_https off
-#}
+{
+  auto_https off
+}
 
-odpady.zochow.ski {
+odpady.zochow.ski:80 {
   bind 0.0.0.0
 
   reverse_proxy localhost:4321
-  tls internal
 }
