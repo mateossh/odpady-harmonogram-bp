@@ -7,6 +7,45 @@ import Link from "../components/Link.astro";
 import Layout from "../layouts/Layout.astro";
 
 import { Calendar } from '@lucide/astro';
+
+const apple = `webcal://calendar.hltv.events/events.ics`;
+const google = `https://www.google.com/calendar/render?cid=webcal://url=webcal%3A%2F%2Fcalendar.hltv.events%2Fevents.ics`;
+const outlook = `https://outlook.live.com/calendar/0/addcalendar?url=https%3A%2F%2Fcalendar.hltv.events%2Fevents.ics`;
+
+const { site } = Astro;
+
+const getIcon = (iconName: string, props = {}) => {
+  switch (iconName) {
+    case "apple": return { component: AppleIcon, props: { class: "-mt-0.5", ...props } };
+    case "google": return { component: GoogleIcon, props };
+    case "outlook": return { component: OutlookIcon, props };
+    case "calendar": return { component: Calendar, props: { "stroke-width": 3, ...props }};
+  }
+}
+
+const links = [
+  {
+    title: "Kalendarz Apple",
+    icon: "apple",
+    iconClass: "-mt-0.5",
+    href: `webcal://${site}schedule.ics`,
+  },
+  {
+    title: "Kalendarz Google",
+    href: `webcal://${site}schedule.ics`,
+    icon: "google",
+  },
+  {
+    title: "Kalendarz Outlook",
+    href: `webcal://${site}schedule.ics`,
+    icon: "outlook",
+  },
+  {
+    title: "Link do pliku .ics",
+    href: `${site}schedule.ics`,
+    icon: "calendar",
+  },
+]
 ---
 
 <Layout>
@@ -25,22 +64,19 @@ import { Calendar } from '@lucide/astro';
     <nav class="flex flex-col gap-3 flex-1 w-full lg:w-auto">
       <h2 class="text-lg text-gray-800">Aby dodać harmonogram do kalendarza, wciśnij guzior.</h2>
 
-      <Button href="#" size="fat" variant="outline" class="">
-        <AppleIcon class="-mt-0.5" />
-        Kalendarz Apple
-      </Button>
-      <Button href="#" size="fat" variant="outline">
-        <GoogleIcon  />
-        Google Kalendarz
-      </Button>
-      <Button href="#" size="fat" variant="outline">
-        <OutlookIcon />
-        Kalendarz Outlook
-      </Button>
-      <Button href="#" size="fat" variant="outline">
-        <Calendar stroke-width="3" />
-        Link do pliku ICS
-      </Button>
+      {links.map((link) => {
+        const iconData = getIcon(link.icon);
+        if (iconData) {
+          const { component: Icon, props } = iconData;
+          console.log(link.href);
+          return (
+            <Button href={link.href} size="fat" variant="outline">
+              <Icon {...props} />
+              {link.title}
+            </Button>
+          );
+        }
+      })}
     </nav>
 
     <aside class="w-[20rem] shrink mx-auto lg:mx-0">

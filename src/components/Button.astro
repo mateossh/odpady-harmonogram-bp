@@ -1,11 +1,16 @@
 ---
+
 import { cva } from 'class-variance-authority';
 import type {  VariantProps } from "class-variance-authority";
 
 import { cn } from '../lib/utils';
 
+// https://docs.astro.build/en/guides/typescript/#polymorphic-type
+// import type { HTMLTag, Polymorphic } from "astro/types";
+// type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }>;
 
 const {
+  href,
   class: className,
   variant,
   size,
@@ -46,9 +51,23 @@ const buttonVariants = cva(
 );
 ---
 
-<button
-  class={cn(buttonVariants({ variant, size, className }))}
-  {...props}
->
-  <slot />
-</button>
+{
+ href ? (
+
+  <a
+    href={href}
+    class={cn(buttonVariants({ variant, size, className }))}
+    {...props}
+  >
+    <slot />
+  </a>
+ ) : (
+
+ <button
+   class={cn(buttonVariants({ variant, size, className }))}
+   {...props}
+ >
+   <slot />
+ </button>
+ )
+}
