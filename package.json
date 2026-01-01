@@ -9,10 +9,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "oxlint --type-aware",
-    "lint:fix": "oxlint --fix --type-aware",
-    "coredns": "coredns -conf Corefile",
-    "caddy": "caddy run --config Caddyfile"
+    "lint": "oxlint -c .config/.oxlintrc.json --type-aware --type-check --deny-warnings --report-unused-disable-directives",
+    "lint:fix": "oxlint -c .config/.oxlintrc.json --fix --type-aware --type-check --deny-warnings --report-unused-disable-directives",
+    "coredns": "coredns -conf .config/Corefile",
+    "caddy": "caddy run --config .config/Caddyfile"
   },
   "devDependencies": {
     "@astrojs/ts-plugin": "^1.10.6",
