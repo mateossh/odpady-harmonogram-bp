@@ -22,6 +22,15 @@ There's nothing special about `src/components/`, but that's where we like to put
 
 Any static assets, like images, can be placed in the `public/` directory.
 
+## How to test on phone locally
+
+1. `brew install caddy coredns`
+2. update A record and your local IP address in Corefile and Caddyfile
+3. set your local DNS on phone
+4. `bun coredns` (in one terminal)
+5. `bun caddy` (in another terminal) (doesn't work now)
+6. `bun dev:lan`
+
 ## Commands
 
 All commands are run from the root of the project, from a terminal:
