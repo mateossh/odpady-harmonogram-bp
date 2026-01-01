@@ -1,38 +1,59 @@
 ---
+import Button from "../components/Button.astro";
+import AppleIcon from "../components/icons/Apple.astro";
+import GoogleIcon from "../components/icons/Google.astro";
+import OutlookIcon from "../components/icons/Outlook.astro";
+import Link from "../components/Link.astro";
 import Layout from "../layouts/Layout.astro";
+
+import { Calendar } from '@lucide/astro';
 ---
 
 <Layout>
 
-  <header>
-    <h1 class="tracking-tight text-pretty text-neutral-900 max-w-4xl text-2xl leading-[1.2]! sm:text-4xl md:text-5xl font-semibold">
-      Harmonogram odbioru odpadów, prosto w twoim kalendarzu.
+  <header class="flex flex-col gap-2">
+    <h1 class="tracking-[-0.0375em] text-pretty text-neutral-900 max-w-4xl text-2xl sm:text-4xl/[1.2] md:text-5xl/[1.2] font-semibold">
+      Harmonogram odbioru odpadów na terenie gminy Boguty-Pianki, prosto w Twoim kalendarzu.
     </h1>
 
-    <p class="text-gray-700 text-pretty text-lg leading-7 sm:text-xl sm:leading-8 font-medium">
+    <p class="text-gray-700 text-pretty text-lg/7 sm:text-xl/8 font-medium">
       Nigdy więcej nie przegap dnia odbioru śmieci. Zsynchronizuj harmonogram z kalendarzem i otrzymuj powiadomienia w twoim telefonie.
     </p>
   </header>
 
-  <section class="bg-[#F9FAFB] rounded-xl p-6 w-full border border-[#E5E7EB] flex flex-col lg:flex-row gap-6">
+  <section class="bg-gray-50/50 rounded-xl p-6 w-full border border-gray-200 flex flex-col lg:flex-row gap-6">
     <nav class="flex flex-col gap-3 flex-1 w-full lg:w-auto">
       <h2 class="text-lg text-gray-800">Aby dodać harmonogram do kalendarza, wciśnij guzior.</h2>
 
-      <a href="#">Kalendarz Apple</a>
-      <a href="#">Google Kalendarz</a>
-      <a href="#">Kalendarz Outlook</a>
-      <a href="#">Link do pliku ICS</a>
+      <Button href="#" size="fat" variant="outline" class="">
+        <AppleIcon class="-mt-0.5" />
+        Kalendarz Apple
+      </Button>
+      <Button href="#" size="fat" variant="outline">
+        <GoogleIcon  />
+        Google Kalendarz
+      </Button>
+      <Button href="#" size="fat" variant="outline">
+        <OutlookIcon />
+        Kalendarz Outlook
+      </Button>
+      <Button href="#" size="fat" variant="outline">
+        <Calendar stroke-width="3" />
+        Link do pliku ICS
+      </Button>
     </nav>
 
-    <aside>
+    <aside class="w-[20rem] shrink mx-auto lg:mx-0">
       tutaj obrazek
     </aside>
   </section>
 
   <footer class="text-gray-500 text-xs w-full">
-    <p>
-      Harmonogram został pobrany ze <a href="https://boguty-pianki.pl" target="_blank" rel="noopener noreferrer">strony internetowej Urzędu Gminy</a>.
+    <p class="flex flex-col gap-1">
+      <span>
+        Harmonogram został pobrany ze <Link href="https://boguty-pianki.pl" target="_blank" rel="noopener noreferrer">strony internetowej Urzędu Gminy Boguty-Pianki.</Link>
+      </span>
+      <span>Autor projektu: <Link href="https://zochow.ski" target="_blank" rel="noopener noreferrer">zochow.ski</Link></span>
     </p>
-    <p>Autor projektu: <a href="#">mtsh</a>.</p>
   </footer>
 </Layout>

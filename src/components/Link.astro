@@ -13,6 +13,6 @@ type Props = HTMLAttributes<"a">;
 
 const { href, ...attrs } = Astro.props;
 ---
-<a href={href} {...attrs}>
+<a href={href} {...attrs} class="underline underline-offset-4">
   <slot />
 </a>

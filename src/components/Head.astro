@@ -1,17 +1,44 @@
 ---
-const { title = "My Astro Website", ...props } = Astro.props;
+const { title = "Datownik", description, ...props } = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  headline: title,
+  publisher: {
+    "@type": "Organization",
+    name: "Datownik",
+  },
+};
 ---
-<link rel="sitemap" href="/sitemap-index.xml">
+<!-- <link rel="sitemap" href="/sitemap-index.xml" /> -->
 <title>{title}</title>
-<meta name="description" content="Welcome to my new Astro site!">
+{description && <meta name="description" content={description} />}
 
 <!-- Web analytics -->
-<script data-goatcounter="https://my-account.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- <script
+  data-goatcounter="https://my-account.goatcounter.com/count"
+  async
+  src="//gc.zgo.at/count.js"></script> -->
 
 <!-- Open Graph tags -->
-<meta property="og:title" content="My New Astro Website" />
+<meta property="og:title" content={title} />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.example.com/" />
-<meta property="og:description" content="Welcome to my new Astro site!" />
-<meta property="og:image" content="https://www.example.com/_astro/seo-banner.BZD7kegZ.webp">
-<meta property="og:image:alt" content="">
+<meta property="og:url" content={Astro.url} />
+{
+  description && (
+    <meta property="og:description" content="Welcome to my new Astro site!" />
+  )
+}
+<!-- <meta
+  property="og:image"
+  content="https://www.example.com/_astro/seo-banner.BZD7kegZ.webp"
+/> -->
+<!-- <meta property="og:image:alt" content="" /> -->
+
+<script
+  type="application/ld+json"
+  is:inline
+  is:raw
+  set:html={JSON.stringify(jsonLd, null, 2)}
+/>

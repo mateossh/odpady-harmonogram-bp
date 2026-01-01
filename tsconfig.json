@@ -26,6 +26,11 @@
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false,
 
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+    },
+
     "plugins": [
       {
         "name": "@astrojs/ts-plugin",
