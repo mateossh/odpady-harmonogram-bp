@@ -9,7 +9,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint": "oxlint --type-aware",
-    "lint:fix": "oxlint --fix --type-aware"
+    "lint:fix": "oxlint --fix --type-aware",
+    "coredns": "coredns -conf Corefile",
+    "caddy": "caddy run --config Caddyfile"
   },
   "devDependencies": {
     "@astrojs/ts-plugin": "^1.10.6",

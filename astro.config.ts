@@ -18,4 +18,7 @@ export default defineConfig({
   },
   // @ts-expect-error types mismatch
   integrations: [stripHTMLComments(), sitemap()],
+  server: {
+    allowedHosts: ["odpady.zochow.ski"],
+  },
 });
