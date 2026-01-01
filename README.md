@@ -26,10 +26,11 @@ Any static assets, like images, can be placed in the `public/` directory.
 
 1. `brew install caddy coredns`
 2. update A record and your local IP address in Corefile and Caddyfile
-3. set your local DNS on phone
-4. `bun coredns` (in one terminal)
-5. `bun caddy` (in another terminal) (doesn't work now)
-6. `bun dev:lan`
+3. update `server.allowedHosts` in astro.config.ts
+4. set your local DNS on phone
+5. `bun coredns` (in one terminal)
+6. `bun caddy` (in another terminal)
+7. `bun dev`
 
 ## Commands
 
