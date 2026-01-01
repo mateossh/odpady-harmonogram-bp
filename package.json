@@ -26,6 +26,7 @@
   "dependencies": {
     "@astrojs/check": "^0.9.6",
     "@astrojs/sitemap": "^3.6.0",
+    "@fontsource-variable/geist": "^5.2.8",
     "@lucide/astro": "^0.562.0",
     "@tailwindcss/vite": "^4.1.18",
     "@zade/vite-plugin-strip-html-comments": "npm:@jsr/zade__vite-plugin-strip-html-comments",
