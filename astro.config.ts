@@ -12,7 +12,7 @@ import { stripHTMLComments } from "@zade/vite-plugin-strip-html-comments";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://example.com",
+  site: "http://odpady.zochow.ski",
   vite: {
     plugins: [tailwindcss()],
   },

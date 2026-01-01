@@ -8,10 +8,6 @@ import Layout from "../layouts/Layout.astro";
 
 import { Calendar } from '@lucide/astro';
 
-const apple = `webcal://calendar.hltv.events/events.ics`;
-const google = `https://www.google.com/calendar/render?cid=webcal://url=webcal%3A%2F%2Fcalendar.hltv.events%2Fevents.ics`;
-const outlook = `https://outlook.live.com/calendar/0/addcalendar?url=https%3A%2F%2Fcalendar.hltv.events%2Fevents.ics`;
-
 const { site } = Astro;
 
 const getIcon = (iconName: string, props = {}) => {
@@ -28,21 +24,23 @@ const links = [
     title: "Kalendarz Apple",
     icon: "apple",
     iconClass: "-mt-0.5",
-    href: `webcal://${site}schedule.ics`,
+    href: `webcal://${site!.hostname}/schedule.ics`,
   },
   {
     title: "Kalendarz Google",
-    href: `webcal://${site}schedule.ics`,
+    // https://interactiondesignfoundation.github.io/add-event-to-calendar-docs/services/google.html
+    // https://calendar.google.com/calendar/render?action=TEMPLATE&text=Event%20Title&add=foo@bar.com&location=Tel%20Aviv&details=Your%20Details...
+    href: ``,
     icon: "google",
   },
   {
     title: "Kalendarz Outlook",
-    href: `webcal://${site}schedule.ics`,
+    href: `https://outlook.live.com/calendar/0/addcalendar?url=${encodeURIComponent(`https://${site!.hostname}/schedule.ics`)}`,
     icon: "outlook",
   },
   {
     title: "Link do pliku .ics",
-    href: `${site}schedule.ics`,
+    href: `/schedule.ics`,
     icon: "calendar",
   },
 ]
@@ -68,7 +66,7 @@ const links = [
         const iconData = getIcon(link.icon);
         if (iconData) {
           const { component: Icon, props } = iconData;
-          console.log(link.href);
+
           return (
             <Button href={link.href} size="fat" variant="outline">
               <Icon {...props} />
