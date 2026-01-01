@@ -1,19 +1,55 @@
 ---
-const { title = "Datownik", description, ...props } = Astro.props;
+const { title = "Datownik", ...props } = Astro.props;
+
+const description = "lorem ipsum dolor sit amet sie zmieni to"
+
+const keywords = ["jakies", "keywordy"].join(",");
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "NewsArticle",
-  headline: title,
-  publisher: {
-    "@type": "Organization",
-    name: "Datownik",
-  },
-};
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "url": "https://odpady.zochow.ski/",
+      "name": "Harmonogram Odbioru Odpadów na terenie gminy Boguty-Pianki",
+      "description": "Zsynchronizuj harmonogram odbioru odpadów z kalendarzem i otrzymuj powiadomienia w telefonie. Obsługa Apple Calendar, Google Calendar i Outlook.",
+      "inLanguage": "pl-PL",
+      "featureList":[
+        "synchronizacja harmonogramu odbioru odpadów z kalendarzem",
+        "integracja z Kalendarzem Apple",
+        "integracja z Kalendarzem Google",
+        "integracja z Kalendarzem Outlook",
+        "pobranie pliku ICS"
+      ],
+      "publisher": {
+        "@id": "https://odpady.zochow.ski/#author"
+      },
+      "accountablePerson": {
+        "@id": "https://odpady.zochow.ski/#author"
+      }
+    },
+    {
+      "@type":"Person",
+      "@id": "https://odpady.zochow.ski/#author",
+      "name":"Mateusz Żochowski",
+      "email":"mateusz@zochow.ski",
+      "sameAs": [
+        "https://zochow.ski",
+        "https://github.com/mateossh"
+      ]
+    }
+  ]
+}
+
+
+
 ---
-<!-- <link rel="sitemap" href="/sitemap-index.xml" /> -->
+<link rel="sitemap" href="/sitemap-index.xml" />
 <title>{title}</title>
-{description && <meta name="description" content={description} />}
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords} />
+<meta name="author" content="Mateusz Żochowski" />
+<meta name="publisher" content="Mateusz Żochowski" />
 
 <!-- Web analytics -->
 <!-- <script
@@ -23,13 +59,19 @@ const jsonLd = {
 
 <!-- Open Graph tags -->
 <meta property="og:title" content={title} />
-<meta property="og:type" content="website" />
+<meta property="og:description" content={description} />
 <meta property="og:url" content={Astro.url} />
-{
-  description && (
-    <meta property="og:description" content="Welcome to my new Astro site!" />
-  )
-}
+<meta property="og:site_name" content={Astro.url} />
+<meta property="og:locale" content="pl_PL" />
+<meta property="og:type" content="website" />
+
+
+<!-- Twitter tags -->
+<meta property="twitter:card" content="" />
+<meta property="twitter:creator" content="" />
+<meta property="twitter:title" content="" />
+<meta property="twitter:description" content={description} />
+
 <!-- <meta
   property="og:image"
   content="https://www.example.com/_astro/seo-banner.BZD7kegZ.webp"
