@@ -15,6 +15,12 @@ export default defineConfig({
   site: "http://odpady.zochow.ski",
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      external: ["@takumi-rs/image-response"],
+    },
+    optimizeDeps: {
+      exclude: ["@takumi-rs/image-response"],
+    },
   },
   // @ts-expect-error types mismatch
   integrations: [stripHTMLComments(), sitemap()],
