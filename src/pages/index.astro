@@ -3,7 +3,6 @@ import Button from "../components/Button.astro";
 import AppleIcon from "../components/icons/Apple.astro";
 import GoogleIcon from "../components/icons/Google.astro";
 import OutlookIcon from "../components/icons/Outlook.astro";
-import Link from "../components/Link.astro";
 import Layout from "../layouts/Layout.astro";
 
 import { Calendar } from '@lucide/astro';
@@ -47,7 +46,6 @@ const links = [
 ---
 
 <Layout>
-
   <header class="flex flex-col gap-3">
     <h1 class="tracking-[-0.0375em] text-pretty text-neutral-900 max-w-4xl text-2xl sm:text-4xl/[1.2] md:text-5xl/[1.2] font-semibold">
       Harmonogram odbioru odpadów na terenie gminy Boguty-Pianki, bezpośrednio w Twoim kalendarzu.
@@ -59,10 +57,9 @@ const links = [
   </header>
 
   <section class="bg-gray-50/50 rounded-xl p-6 w-full border border-gray-200 flex flex-col gap-6">
-
     <h2 class="text-lg text-gray-800">Aby dodać harmonogram do kalendarza, wciśnij guzior.</h2>
-    <nav class="flex flex-col lg:flex-row lg:justify-between gap-3 flex-1 w-full lg:w-auto">
 
+    <nav class="flex flex-col lg:flex-row lg:justify-between gap-3 flex-1 w-full lg:w-auto">
       {links.map((link) => {
         const iconData = getIcon(link.icon);
         if (iconData) {
@@ -82,11 +79,14 @@ const links = [
   <footer class="text-gray-500 text-xs w-full">
     <p class="flex flex-col gap-1">
       <span>
-        Dane wygenerowane na podstawie harmonogramu
-        <!-- Harmonogram został pobrany  -->
-        ze <Link href="https://boguty-pianki.pl" target="_blank" rel="noopener noreferrer">strony internetowej Urzędu Gminy Boguty-Pianki.</Link>
+        Dane wygenerowane na podstawie harmonogramu ze
+        <Button class="text-xs" size="slim" variant="link" href="https://boguty-pianki.pl" target="_blank" rel="noopener noreferrer">
+          strony internetowej Urzędu Gminy Boguty-Pianki
+        </Button>
       </span>
-      <span>Autor projektu: <Link href="https://zochow.ski" target="_blank" rel="noopener noreferrer">zochow.ski</Link></span>
+      <span>
+        Autor projektu: <Button class="text-xs" size="slim" variant="link" href="https://zochow.ski" target="_blank" rel="noopener noreferrer">zochow.ski</Button>
+      </span>
     </p>
   </footer>
 </Layout>
