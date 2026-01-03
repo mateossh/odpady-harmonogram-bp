@@ -1,5 +1,9 @@
 # odpady-harmonogram-bp
 
+![landing-preview](./public/og.png)
+
+Waste collection schedule for Boguty-Pianki, Poland as ICS (iCalendar) file.
+
 Project inspired by [HLTV Events](https://www.hltv.events/) by [Jack LaFond](https://github.com/jacc)
 
 
@@ -8,11 +12,20 @@ Project inspired by [HLTV Events](https://www.hltv.events/) by [Jack LaFond](htt
 Inside of your Astro project, you'll see the following folders and files:
 
 ```text
-│
+├── .config/              # tool configs
+│   ├── .oxlintrc.json
+│   ├── Caddyfile
+│   └── Corefile
 ├── public/
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── components/
+│   ├── layouts/
+│   ├── lib/
+│   ├── pages/
+│   │   └── index.astro
+│   └── styles/
+│       └── global.css    # TailwindCSS config
+├── data.jsonl            # schedule in JSONL format used when generating .ics
 └── package.json
 ```
 
@@ -22,7 +35,7 @@ There's nothing special about `src/components/`, but that's where we like to put
 
 Any static assets, like images, can be placed in the `public/` directory.
 
-## How to test on phone locally
+## Testing locally 
 
 1. `brew install caddy coredns`
 2. update A record and your local IP address in Corefile and Caddyfile
@@ -40,6 +53,7 @@ All commands are run from the root of the project, from a terminal:
 | :------------------------ | :----------------------------------------------- |
 | `bun install`             | Installs dependencies                            |
 | `bun dev`             | Starts local dev server at `localhost:4321`      |
+| `bun lint`            | Lint code changes                                |
 | `bun build`           | Build your production site to `./dist/`          |
 | `bun preview`         | Preview your build locally, before deploying     |
 | `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |

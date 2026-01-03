@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 
 import { generateICS, parseWasteCollections } from "../lib/ics";
 
-const DATA_URL = new URL("../../dane.jsonl", import.meta.url);
+const DATA_URL = new URL("../../data.jsonl", import.meta.url);
 
 async function buildIcs(): Promise<string> {
   const fileContent = await readFile(DATA_URL, "utf-8");
