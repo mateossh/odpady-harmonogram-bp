@@ -29,13 +29,19 @@ const links = [
     title: "Kalendarz Google",
     // https://interactiondesignfoundation.github.io/add-event-to-calendar-docs/services/google.html
     // https://calendar.google.com/calendar/render?action=TEMPLATE&text=Event%20Title&add=foo@bar.com&location=Tel%20Aviv&details=Your%20Details...
-    href: ``,
+    href: `#`,
     icon: "google",
+    props: {
+      disabled: true
+    }
   },
   {
     title: "Kalendarz Outlook",
     href: `https://outlook.live.com/calendar/0/addcalendar?url=${encodeURIComponent(`https://${site!.hostname}/schedule.ics`)}`,
     icon: "outlook",
+    props: {
+      disabled: true
+    }
   },
   {
     title: "Link do pliku .ics",
@@ -66,7 +72,7 @@ const links = [
           const { component: Icon, props } = iconData;
 
           return (
-            <Button href={link.href} size="fat" variant="outline" class="">
+            <Button href={link.href} size="fat" variant="outline" class="" data-disabled="true" {...link.props}>
               <Icon {...props} />
               {link.title}
             </Button>
