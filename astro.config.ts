@@ -10,6 +10,8 @@ NOTE from readme:
 */
 import { stripHTMLComments } from "@zade/vite-plugin-strip-html-comments";
 
+import og from "astro-og";
+
 // https://astro.build/config
 export default defineConfig({
   site: "http://odpady.zochow.ski",
@@ -17,7 +19,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   // @ts-expect-error types mismatch
-  integrations: [stripHTMLComments(), sitemap()],
+  integrations: [stripHTMLComments(), sitemap(), og()],
   server: {
     allowedHosts: ["odpady.zochow.ski"],
   },
