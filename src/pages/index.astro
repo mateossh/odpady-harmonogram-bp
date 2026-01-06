@@ -1,5 +1,6 @@
 ---
 import Button from "../components/Button.astro";
+import Tooltip from "../components/Tooltip.astro";
 import AppleIcon from "../components/icons/Apple.astro";
 import GoogleIcon from "../components/icons/Google.astro";
 import OutlookIcon from "../components/icons/Outlook.astro";
@@ -11,10 +12,10 @@ const { site } = Astro;
 
 const getIcon = (iconName: string, props = {}) => {
   switch (iconName) {
-    case "apple": return { component: AppleIcon, props: { class: "-mt-0.5", ...props } };
-    case "google": return { component: GoogleIcon, props };
-    case "outlook": return { component: OutlookIcon, props };
-    case "calendar": return { component: Calendar, props: { "stroke-width": 3, ...props }};
+    case "apple": return { Component: AppleIcon, props: { class: "-mt-0.5", ...props } };
+    case "google": return { Component: GoogleIcon, props };
+    case "outlook": return { Component: OutlookIcon, props };
+    case "calendar": return { Component: Calendar, props: { "stroke-width": 3, ...props }};
   }
 }
 
@@ -33,7 +34,8 @@ const links = [
     icon: "google",
     props: {
       disabled: true
-    }
+    },
+    tooltipText: "Nie zaimplementowane, dodaj ręcznie z pliku .ics",
   },
   {
     title: "Kalendarz Outlook",
@@ -41,7 +43,8 @@ const links = [
     icon: "outlook",
     props: {
       disabled: true
-    }
+    },
+    tooltipText: "Nie zaimplementowane, dodaj ręcznie z pliku .ics",
   },
   {
     title: "Link do pliku .ics",
@@ -68,16 +71,25 @@ const links = [
     <nav class="flex flex-col lg:flex-row lg:justify-between gap-3 flex-1 w-full lg:w-auto">
       {links.map((link) => {
         const iconData = getIcon(link.icon);
-        if (iconData) {
-          const { component: Icon, props } = iconData;
 
+        if (link.tooltipText) {
           return (
-            <Button href={link.href} size="fat" variant="outline" class="" data-disabled="true" {...link.props}>
-              <Icon {...props} />
-              {link.title}
-            </Button>
+            <Tooltip text={link.tooltipText}>
+              <Button href={link.href} size="fat" variant="outline" class="grow" data-disabled="true" {...link.props}>
+                {iconData && <iconData.Component {...iconData.props} />}
+                {link.title}
+              </Button>
+            </Tooltip>
           );
         }
+
+        return (
+          <Button href={link.href} size="fat" variant="outline" class="" data-disabled="true" {...link.props}>
+            {iconData && <iconData.Component {...iconData.props} />}
+            {link.title}
+          </Button>
+        )
+
       })}
     </nav>
   </section>
