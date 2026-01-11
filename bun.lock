@@ -10,6 +10,7 @@
         "@fontsource-variable/geist": "^5.2.8",
         "@lucide/astro": "^0.562.0",
         "@tailwindcss/vite": "^4.1.18",
+        "@yeskunall/astro-umami": "0.0.7",
         "@zade/vite-plugin-strip-html-comments": "npm:@jsr/zade__vite-plugin-strip-html-comments",
         "astro": "^5.16.6",
         "class-variance-authority": "^0.7.1",
@@ -403,6 +404,8 @@
     "@vscode/emmet-helper": ["@vscode/emmet-helper@2.11.0", "", { "dependencies": { "emmet": "^2.4.3", "jsonc-parser": "^2.3.0", "vscode-languageserver-textdocument": "^1.0.1", "vscode-languageserver-types": "^3.15.1", "vscode-uri": "^3.0.8" } }, "sha512-QLxjQR3imPZPQltfbWRnHU6JecWTF1QSWhx3GAKQpslx7y3Dp6sIIXhKjiUJ/BR9FX8PVthjr9PD6pNwOJfAzw=="],
 
     "@vscode/l10n": ["@vscode/l10n@0.0.18", "", {}, "sha512-KYSIHVmslkaCDyw013pphY+d7x1qV8IZupYfeIfzNA+nsaWHbn5uPuQRvdRFsa9zFzGeudPuoGoZ1Op4jrJXIQ=="],
+
+    "@yeskunall/astro-umami": ["@yeskunall/astro-umami@0.0.7", "", { "peerDependencies": { "astro": "^3.0.0 || ^4.0.0 || ^5.0.0" } }, "sha512-8W/At28qKyPGepwvVumgJX0VZ0F9KK4M4zNDQfUZ3iBJpAKUTAkdIXM7i7I+PFsP7rXOo/AVgcDXDOv9L03QhQ=="],
 
     "@zade/vite-plugin-strip-html-comments": ["@jsr/zade__vite-plugin-strip-html-comments@1.1.3", "https://npm.jsr.io/~/11/@jsr/zade__vite-plugin-strip-html-comments/1.1.3.tgz", { "dependencies": { "astro": "^5.3.0", "vite": "^6.1.1" } }, "sha512-Z0R6d0wlSIzuym4lVvMXd2C46Q5kNE3jhQUEBc+c/Bz/JkoJrjQ5B9uG/JChMEyNrlHAIlW+uzd+llOk5Q/ppQ=="],
 

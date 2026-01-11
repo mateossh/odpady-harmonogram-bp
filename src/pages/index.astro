@@ -25,6 +25,10 @@ const links = [
     icon: "apple",
     iconClass: "-mt-0.5",
     href: `webcal://${site!.hostname}/schedule.ics`,
+    props: {
+      "data-umami-event": "ics button",
+      "data-umami-event-type": "apple",
+    }
   },
   {
     title: "Kalendarz Google",
@@ -33,7 +37,9 @@ const links = [
     href: `#`,
     icon: "google",
     props: {
-      disabled: true
+      disabled: true,
+      "data-umami-event": "ics button",
+      "data-umami-event-type": "google",
     },
     tooltipText: "Nie zaimplementowane, dodaj ręcznie z pliku .ics",
   },
@@ -42,7 +48,9 @@ const links = [
     href: `https://outlook.live.com/calendar/0/addcalendar?url=${encodeURIComponent(`https://${site!.hostname}/schedule.ics`)}`,
     icon: "outlook",
     props: {
-      disabled: true
+      disabled: true,
+      "data-umami-event": "ics button",
+      "data-umami-event-type": "outlook",
     },
     tooltipText: "Nie zaimplementowane, dodaj ręcznie z pliku .ics",
   },
@@ -50,6 +58,10 @@ const links = [
     title: "Link do pliku .ics",
     href: `/schedule.ics`,
     icon: "calendar",
+    props: {
+      "data-umami-event": "ics button",
+      "data-umami-event-type": "file",
+    }
   },
 ]
 ---
@@ -98,12 +110,18 @@ const links = [
     <p class="flex flex-col gap-1">
       <span>
         Dane wygenerowane na podstawie harmonogramu ze
-        <Button class="text-xs" size="slim" variant="link" href="https://boguty-pianki.pl" target="_blank" rel="noopener noreferrer">
+        <Button class="text-xs" size="slim" variant="link" href="https://boguty-pianki.pl" target="_blank" rel="noopener noreferrer"
+          data-umami-event="outbound-link-click"
+          data-umami-event-url="https://boguty-pianki.pl"
+        >
           strony internetowej Urzędu Gminy Boguty-Pianki
         </Button>
       </span>
       <span>
-        Autor projektu: <Button class="text-xs" size="slim" variant="link" href="https://zochow.ski" target="_blank" rel="noopener noreferrer">zochow.ski</Button>
+        Autor projektu: <Button class="text-xs" size="slim" variant="link" href="https://zochow.ski" target="_blank" rel="noopener noreferrer"
+        data-umami-event="outbound-link-click"
+        data-umami-event-url="https://zochow.ski"
+        >zochow.ski</Button>
       </span>
     </p>
   </footer>
