@@ -11,14 +11,17 @@
     "lint": "oxlint -c .config/.oxlintrc.json --type-aware --type-check --deny-warnings --report-unused-disable-directives",
     "lint:fix": "oxlint -c .config/.oxlintrc.json --fix --type-aware --type-check --deny-warnings --report-unused-disable-directives",
     "coredns": "coredns -conf .config/Corefile",
-    "caddy": "caddy run --config .config/Caddyfile"
+    "caddy": "caddy run --config .config/Caddyfile",
+    "format": "oxfmt -c .config/.oxfmtrc.json",
+    "format:check": "oxfmt -c .config/.oxfmtrc.json --check"
   },
   "devDependencies": {
     "@astrojs/ts-plugin": "^1.10.6",
     "@types/bun": "^1.3.5",
     "astro-og": "^0.3.1",
-    "oxlint": "^1.36.0",
-    "oxlint-tsgolint": "^0.10.0"
+    "oxfmt": "^0.23.0",
+    "oxlint": "^1.38.0",
+    "oxlint-tsgolint": "^0.11.0"
   },
   "peerDependencies": {
     "typescript": "^5"
