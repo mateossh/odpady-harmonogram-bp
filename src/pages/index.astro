@@ -32,16 +32,12 @@ const links = [
   },
   {
     title: "Kalendarz Google",
-    // https://interactiondesignfoundation.github.io/add-event-to-calendar-docs/services/google.html
-    // https://calendar.google.com/calendar/render?action=TEMPLATE&text=Event%20Title&add=foo@bar.com&location=Tel%20Aviv&details=Your%20Details...
-    href: `#`,
+    href: `https://calendar.google.com/calendar/r?cid=${encodeURIComponent(`webcal://${site!.hostname}/schedule.ics`)}`,
     icon: "google",
     props: {
-      disabled: true,
       "data-umami-event": "ics button",
       "data-umami-event-type": "google",
     },
-    tooltipText: "Nie zaimplementowane, dodaj ręcznie z pliku .ics",
   },
   {
     title: "Kalendarz Outlook",
