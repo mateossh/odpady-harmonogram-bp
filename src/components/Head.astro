@@ -2,7 +2,6 @@
 const { title = "Harmonogram odbioru odpadów na terenie gminy Boguty-Pianki", ...props } = Astro.props;
 
 const description = "Zsynchronizuj harmonogram odbioru odpadów z kalendarzem i otrzymuj powiadomienia w telefonie. Obsługa Apple Calendar, Google Calendar i Outlook."
-const keywords = ["jakies", "keywordy"].join(",");
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -43,15 +42,14 @@ const jsonLd = {
 <link rel="sitemap" href="/sitemap-index.xml" />
 <title>{title}</title>
 <meta name="description" content={description} />
-<meta name="keywords" content={keywords} />
 <meta name="author" content="Mateusz Żochowski" />
 <meta name="publisher" content="Mateusz Żochowski" />
 
 <!-- Web analytics -->
-<!-- <script
-  data-goatcounter="https://my-account.goatcounter.com/count"
-  async
-  src="//gc.zgo.at/count.js"></script> -->
+<script
+  defer
+  data-website-id="0c575de9-f36d-457b-99e3-25db16ead1aa"
+  src="https://q.zochow.ski/script.js"></script>
 
 <!-- Open Graph tags -->
 <meta property="og:title" content={title} />
