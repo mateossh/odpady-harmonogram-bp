@@ -1,11 +1,23 @@
 {
   "$schema": "../node_modules/oxfmt/configuration_schema.json",
   "printWidth": 80,
+  "ignorePatterns": ["dist/**", "sst-env.d.ts"],
   "experimentalTailwindcss": {
     "attributes": ["class", "className", "class:list"],
     "functions": ["clsx", "cn", "cva", "tw"],
 
     // Path wrelative to the Oxfmt configuration file.
-    "stylesheet": "../src/styles/global.css",
+    "stylesheet": "../src/styles/global.css"
   },
+  "experimentalSortImports": {
+    "groups": [
+      ["side-effect"],
+      ["builtin"],
+      ["external", "type-external"],
+      ["internal", "type-internal"],
+      ["parent", "type-parent"],
+      ["sibling", "type-sibling"],
+      ["index", "type-index"]
+    ]
+  }
 }
