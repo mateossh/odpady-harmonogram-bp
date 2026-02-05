@@ -3,4 +3,5 @@
 
 [run]
 # equivalent to `bun --bun` for all `bun run` commands
-bun = true
+# bun = true
+# temporarily disabled because of "setFlagsFromString is not yet implemented in bun" when running sst

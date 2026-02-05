@@ -38,3 +38,6 @@ TODO
 
 *.pdf
 *.ics
+
+# sst
+.sst

@@ -14,12 +14,6 @@ import og from "astro-og";
 
 import umami from "@yeskunall/astro-umami";
 
-// <!-- Web analytics -->
-// <script
-//   defer
-//   data-website-id="0c575de9-f36d-457b-99e3-25db16ead1aa"
-//   src="https://q.zochow.ski/script.js"></script>
-
 // https://astro.build/config
 export default defineConfig({
   site: "http://odpady.zochow.ski",
