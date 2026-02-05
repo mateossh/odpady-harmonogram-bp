@@ -60,14 +60,15 @@ export function generateICS(collections: WasteCollection[]): string {
   const now = new Date();
   const timestamp = now.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
 
-  let ics = `BEGIN:VCALENDAR\n`
-    + `VERSION:2.0\n`
-    + `X-WR-CALNAME:Harmonogram Odbioru Odpadów - Boguty-Pianki\n`
-    + `X-WR-CALDESC:Harmonogram odbioru odpadów komunalnych w Bogutach-Piankach\n`
-    + `X-WR-TIMEZONE:Europe/Warsaw\n`
-    + `PRODID:-//Odpady BP//Harmonogram 1.0//PL\n`
-    + `CALSCALE:GREGORIAN\n`
-    + `METHOD:PUBLISH\n`;
+  let ics =
+    `BEGIN:VCALENDAR\n` +
+    `VERSION:2.0\n` +
+    `X-WR-CALNAME:Harmonogram Odbioru Odpadów - Boguty-Pianki\n` +
+    `X-WR-CALDESC:Harmonogram odbioru odpadów komunalnych w Bogutach-Piankach\n` +
+    `X-WR-TIMEZONE:Europe/Warsaw\n` +
+    `PRODID:-//Odpady BP//Harmonogram 1.0//PL\n` +
+    `CALSCALE:GREGORIAN\n` +
+    `METHOD:PUBLISH\n`;
 
   collections.forEach((collection, index) => {
     const collectionDate = parseDate(collection.date);
@@ -77,27 +78,29 @@ export function generateICS(collections: WasteCollection[]): string {
     const dtstart = formatICSDateTime(collectionDate, startTime);
     const dtend = formatICSDateTime(collectionDate, endTime);
     const summary = collection.kind ?? "Odbiór odpadów";
-    const descriptionSource = collection.description ?? collection.kind ?? "Odbiór odpadów";
+    const descriptionSource =
+      collection.description ?? collection.kind ?? "Odbiór odpadów";
     const description = escapeICSText(
       `🗑️ Harmonogram odbioru odpadów\\n\\nRodzaje odpadów: ${descriptionSource}\\n\\nGodziny odbioru: ${collection.timeRange}`,
     );
 
-    ics += `BEGIN:VEVENT\n`
-      + `BEGIN:VALARM\n`
-      + `ACTION:DISPLAY\n`
-      + `DESCRIPTION:Przypomnienie o odbiorze odpadów\n`
-      + `TRIGGER:-PT12H\n`
-      + `END:VALARM\n`
-      + `UID:${uid}\n`
-      + `DTSTAMP:${timestamp}\n`
-      + `DTSTART:${dtstart}\n`
-      + `DTEND:${dtend}\n`
-      + `SUMMARY:${summary}\n`
-      + `DESCRIPTION:${description}\n`
-      + `LOCATION:Boguty-Pianki\n`
-      + `STATUS:CONFIRMED\n`
-      + `CATEGORIES:Odpady,Harmonogram\n`
-      + `END:VEVENT\n`;
+    ics +=
+      `BEGIN:VEVENT\n` +
+      `BEGIN:VALARM\n` +
+      `ACTION:DISPLAY\n` +
+      `DESCRIPTION:Przypomnienie o odbiorze odpadów\n` +
+      `TRIGGER:-PT12H\n` +
+      `END:VALARM\n` +
+      `UID:${uid}\n` +
+      `DTSTAMP:${timestamp}\n` +
+      `DTSTART:${dtstart}\n` +
+      `DTEND:${dtend}\n` +
+      `SUMMARY:${summary}\n` +
+      `DESCRIPTION:${description}\n` +
+      `LOCATION:Boguty-Pianki\n` +
+      `STATUS:CONFIRMED\n` +
+      `CATEGORIES:Odpady,Harmonogram\n` +
+      `END:VEVENT\n`;
   });
 
   ics += "END:VCALENDAR\n";
@@ -105,7 +108,7 @@ export function generateICS(collections: WasteCollection[]): string {
 }
 
 function normalizeLine(line: string): string {
-  return line.replace(KEY_PATTERN, "$1\"$2\":");
+  return line.replace(KEY_PATTERN, '$1"$2":');
 }
 
 export function parseWasteCollections(jsonl: string): WasteCollection[] {
@@ -118,4 +121,3 @@ export function parseWasteCollections(jsonl: string): WasteCollection[] {
       return JSON.parse(normalized) as WasteCollection;
     });
 }
-

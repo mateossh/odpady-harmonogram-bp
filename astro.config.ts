@@ -1,18 +1,9 @@
-import { defineConfig } from "astro/config";
-
-import tailwindcss from "@tailwindcss/vite";
-
 import sitemap from "@astrojs/sitemap";
-/*
-NOTE from readme:
-> It might also break your ability to send non-text data (i.e. images) from SSR
-  pages. Maybe just don't use this for an SSR site, only use it for SSGs.
-*/
-import { stripHTMLComments } from "@zade/vite-plugin-strip-html-comments";
-
-import og from "astro-og";
-
+import tailwindcss from "@tailwindcss/vite";
 import umami from "@yeskunall/astro-umami";
+import { stripHTMLComments } from "@zade/vite-plugin-strip-html-comments";
+import og from "astro-og";
+import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({

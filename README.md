@@ -6,7 +6,6 @@ Waste collection schedule for Boguty-Pianki, Poland as ICS (iCalendar) file.
 
 Project inspired by [HLTV Events](https://www.hltv.events/) by [Jack LaFond](https://github.com/jacc)
 
-
 ## Project Structure
 
 Inside of your Astro project, you'll see the following folders and files:
@@ -35,7 +34,7 @@ There's nothing special about `src/components/`, but that's where we like to put
 
 Any static assets, like images, can be placed in the `public/` directory.
 
-## Testing locally 
+## Testing locally
 
 1. `brew install caddy coredns`
 2. update A record and your local IP address in Corefile and Caddyfile
@@ -49,16 +48,15 @@ Any static assets, like images, can be placed in the `public/` directory.
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
+| Command               | Action                                           |
+| :-------------------- | :----------------------------------------------- |
+| `bun install`         | Installs dependencies                            |
 | `bun dev`             | Starts local dev server at `localhost:4321`      |
 | `bun lint`            | Lint code changes                                |
 | `bun build`           | Build your production site to `./dist/`          |
 | `bun preview`         | Preview your build locally, before deploying     |
 | `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `bun astro -- --help` | Get help using the Astro CLI                     |
-
 
 This project was created using `bun init` in bun v1.3.4. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
 

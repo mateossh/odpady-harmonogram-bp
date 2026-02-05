@@ -1,5 +1,6 @@
-import type { APIRoute } from "astro";
 import { readFile } from "node:fs/promises";
+
+import type { APIRoute } from "astro";
 
 import { generateICS, parseWasteCollections } from "../lib/ics";
 

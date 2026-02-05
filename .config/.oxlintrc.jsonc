@@ -105,21 +105,21 @@
     "unicorn/no-useless-length-check": "warn",
     "unicorn/no-useless-spread": "warn",
     "unicorn/prefer-set-size": "warn",
-    "unicorn/prefer-string-starts-ends-with": "warn"
+    "unicorn/prefer-string-starts-ends-with": "warn",
   },
   "settings": {
     "jsx-a11y": {
       "polymorphicPropName": null,
       "components": {},
-      "attributes": {}
+      "attributes": {},
     },
     "next": {
-      "rootDir": []
+      "rootDir": [],
     },
     "react": {
       "formComponents": [],
       "linkComponents": [],
-      "version": null
+      "version": null,
     },
     "jsdoc": {
       "ignorePrivate": false,
@@ -129,15 +129,15 @@
       "augmentsExtendsReplacesDocs": false,
       "implementsReplacesDocs": false,
       "exemptDestructuredRootsFromChecks": false,
-      "tagNamePreference": {}
+      "tagNamePreference": {},
     },
     "vitest": {
-      "typecheck": false
-    }
+      "typecheck": false,
+    },
   },
   "env": {
-    "builtin": true
+    "builtin": true,
   },
   "globals": {},
-  "ignorePatterns": []
+  "ignorePatterns": [],
 }
