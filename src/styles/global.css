@@ -79,6 +79,23 @@
 }
 
 @theme inline {
+  /* eco landing page palette */
+  --color-eco-bg: #f4f1eb;
+  --color-eco-sage: #7a8c6e;
+  --color-eco-sage-light: #a4b396;
+  --color-eco-sage-dark: #4a5a3e;
+  --color-eco-earth: #8b7355;
+  --color-eco-cream: #faf8f3;
+  --color-eco-ink: #2c2a25;
+  --color-eco-muted: #9c9688;
+  --color-eco-warm: #c4a882;
+  --color-eco-moss: #d4dcc8;
+
+  --color-dunno: rgba(196, 168, 130, 0.2);
+
+  --font-fraunces: "Fraunces", serif;
+  --font-outfit: "Outfit", sans-serif;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -130,5 +147,46 @@
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
+  }
+}
+
+@layer utilities {
+  .animation-delay-100 {
+    animation-delay: 0.1s;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-300 {
+    animation-delay: 0.3s;
+  }
+
+  .animation-delay-350 {
+    animation-delay: 0.35s;
+  }
+
+  .animation-delay-450 {
+    animation-delay: 0.45s;
+  }
+
+  .animation-delay-550 {
+    animation-delay: 0.55s;
+  }
+}
+
+@theme {
+  --animate-soft-in: softIn 0.5s ease both;
+
+  @keyframes softIn {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }

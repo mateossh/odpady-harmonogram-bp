@@ -1,7 +1,7 @@
 ---
 import AppleIcon from "../components/icons/Apple.astro";
 import GoogleIcon from "../components/icons/Google.astro";
-import { Calendar, Copy, Leaf, Recycle, ArrowRight } from "@lucide/astro";
+import { Calendar, Copy, Leaf, Recycle, ArrowRight, BookOpen, ChevronDown } from "@lucide/astro";
 
 import "@fontsource-variable/geist";
 import "../styles/global.css";
@@ -21,379 +21,237 @@ const googleUrl = `https://calendar.google.com/calendar/r?cid=${encodeURICompone
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Outfit:wght@300;400;500;600&display=swap');
 
-      :root {
-        --eco-bg: #f4f1eb;
-        --eco-sage: #7a8c6e;
-        --eco-sage-light: #a4b396;
-        --eco-sage-dark: #4a5a3e;
-        --eco-earth: #8b7355;
-        --eco-cream: #faf8f3;
-        --eco-ink: #2c2a25;
-        --eco-muted: #9c9688;
-        --eco-warm: #c4a882;
-        --eco-moss: #d4dcc8;
-      }
-
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-
-      body {
-        background: var(--eco-bg);
-        color: var(--eco-ink);
-        font-family: 'Outfit', sans-serif;
-        min-height: 100vh;
-        overflow-x: hidden;
-        position: relative;
-      }
-
-      /* Soft organic background blobs */
-      body::before {
-        content: '';
-        position: fixed;
-        top: -20%;
-        right: -10%;
-        width: 50vw;
-        height: 50vw;
-        background: radial-gradient(ellipse, var(--eco-moss) 0%, transparent 70%);
-        opacity: 0.5;
-        pointer-events: none;
-        border-radius: 50%;
-      }
-
-      body::after {
-        content: '';
-        position: fixed;
-        bottom: -15%;
-        left: -15%;
-        width: 45vw;
-        height: 45vw;
-        background: radial-gradient(ellipse, rgba(196, 168, 130, 0.2) 0%, transparent 70%);
-        pointer-events: none;
-        border-radius: 50%;
-      }
-
-      .eco-page {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 3rem 2rem 2rem;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        position: relative;
-        z-index: 1;
-      }
-
-      .eco-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        padding: 0.4rem 0.9rem;
-        background: var(--eco-moss);
-        border-radius: 100px;
-        font-size: 0.68rem;
-        font-weight: 500;
-        color: var(--eco-sage-dark);
-        margin-bottom: 2rem;
-        letter-spacing: 0.02em;
-      }
-
-      .eco-badge :global(svg) {
-        width: 13px;
-        height: 13px;
-      }
-
-      .eco-hero {
-        text-align: center;
-        margin-bottom: 2.5rem;
-      }
-
+      /* clamp() font sizes */
       .eco-headline {
-        font-family: 'Fraunces', serif;
         font-size: clamp(2rem, 5.5vw, 3rem);
-        line-height: 1.15;
-        font-weight: 400;
-        margin-bottom: 1.25rem;
         font-optical-sizing: auto;
-        color: var(--eco-ink);
       }
 
       .eco-headline .accent {
-        color: var(--eco-sage);
-        font-style: italic;
         font-variation-settings: "SOFT" 100, "WONK" 1;
       }
 
       .eco-deck {
         font-size: clamp(0.9rem, 2vw, 1.05rem);
-        line-height: 1.7;
-        color: var(--eco-muted);
-        max-width: 40ch;
-        margin: 0 auto;
-        font-weight: 300;
       }
 
-      .eco-illustration {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 2rem;
-        margin-bottom: 2.5rem;
-        opacity: 0.25;
+      /* Accordion open/close state */
+      .eco-docs-item.open .eco-docs-toggle-chevron {
+        transform: rotate(180deg);
       }
 
-      .eco-illustration :global(svg) {
-        color: var(--eco-sage);
-      }
-
-      .eco-dot-line {
-        width: 60px;
-        border-top: 2px dotted var(--eco-sage-light);
-      }
-
-      .eco-cards {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-        width: 100%;
-        margin-bottom: 1.5rem;
-      }
-
-      .eco-card {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 1rem 1.25rem;
-        background: var(--eco-cream);
-        border: 1px solid var(--eco-moss);
-        border-radius: 14px;
-        text-decoration: none;
-        color: var(--eco-ink);
-        transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
-        font-family: 'Outfit', sans-serif;
-        cursor: pointer;
-      }
-
-      .eco-card:hover {
-        background: white;
-        border-color: var(--eco-sage-light);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(122, 140, 110, 0.12);
-      }
-
-      .eco-card-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-        background: var(--eco-moss);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        transition: background 0.3s ease;
-      }
-
-      .eco-card:hover .eco-card-icon {
-        background: var(--eco-sage);
-      }
-
-      .eco-card-icon :global(svg) {
-        width: 18px;
-        height: 18px;
-      }
-
-      .eco-card:hover .eco-card-icon :global(svg) {
-        fill: white;
-        color: white;
-      }
-
-      .eco-card-text {
-        flex: 1;
-      }
-
-      .eco-card-title {
-        font-weight: 500;
-        font-size: 0.9rem;
-        margin-bottom: 0.1rem;
-      }
-
-      .eco-card-sub {
-        font-size: 0.72rem;
-        color: var(--eco-muted);
-      }
-
-      .eco-card-arrow {
-        color: var(--eco-sage-light);
-        opacity: 0;
-        transition: all 0.3s ease;
-        transform: translateX(-4px);
-      }
-
-      .eco-card:hover .eco-card-arrow {
-        opacity: 1;
-        transform: translateX(0);
-        color: var(--eco-sage);
-      }
-
-      .eco-link-section {
-        width: 100%;
-        margin-bottom: 3rem;
-      }
-
-      .eco-link-label {
-        font-size: 0.62rem;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        color: var(--eco-muted);
-        margin-bottom: 0.5rem;
-        font-weight: 500;
-        text-align: center;
-      }
-
-      .eco-link-box {
-        display: flex;
-        align-items: center;
-        background: var(--eco-cream);
-        border: 1px solid var(--eco-moss);
-        border-radius: 10px;
+      .eco-docs-content {
+        max-height: 0;
         overflow: hidden;
+        transition: max-height 0.35s cubic-bezier(0.2, 0, 0, 1);
       }
 
-      .eco-link-url {
-        flex: 1;
-        padding: 0.8rem 1rem;
-        font-family: 'JetBrains Mono', 'Courier New', monospace;
-        font-size: 0.68rem;
-        color: var(--eco-sage-dark);
-        word-break: break-all;
-        opacity: 0.6;
-        user-select: all;
+      .eco-docs-item.open .eco-docs-content {
+        max-height: 600px;
       }
 
-      .eco-link-copy {
-        padding: 0.8rem 1.25rem;
-        border: none;
-        border-left: 1px solid var(--eco-moss);
-        background: var(--eco-moss);
-        color: var(--eco-sage-dark);
-        font-family: 'Outfit', sans-serif;
-        font-size: 0.7rem;
-        font-weight: 500;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-        transition: all 0.2s ease;
-        white-space: nowrap;
+      /* Sibling combinator for step spacing */
+      .eco-docs-step + .eco-docs-step {
+        padding-top: 0.7rem;
       }
-
-      .eco-link-copy:hover {
-        background: var(--eco-sage);
-        color: white;
-      }
-
-      .eco-footer {
-        margin-top: auto;
-        text-align: center;
-        font-size: 0.68rem;
-        color: var(--eco-muted);
-        line-height: 1.8;
-      }
-
-      .eco-footer a {
-        color: var(--eco-sage);
-        text-decoration: none;
-        font-weight: 500;
-      }
-
-      .eco-footer a:hover {
-        text-decoration: underline;
-      }
-
-      @keyframes softIn {
-        from { opacity: 0; transform: translateY(16px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-
-      .eco-badge { animation: softIn 0.5s ease 0.1s both; }
-      .eco-hero { animation: softIn 0.5s ease 0.2s both; }
-      .eco-illustration { animation: softIn 0.5s ease 0.3s both; }
-      .eco-cards { animation: softIn 0.5s ease 0.35s both; }
-      .eco-link-section { animation: softIn 0.5s ease 0.45s both; }
     </style>
   </head>
-  <body>
-    <div class="eco-page">
-      <div class="eco-badge">
+  <body class="bg-eco-bg text-eco-ink font-outfit min-h-screen overflow-x-hidden relative">
+    <div class="fixed size-[50vw] -top-1/5 -right-1/10 rounded-full opacity-50 bg-radial from-(--color-eco-moss) from-0% to-transparent to-70%"></div>
+
+    <div class="fixed size-[45vw] -bottom-[15%] -left-[15%] rounded-full opacity-50 bg-radial from-(--color-dunno) from-0% to-transparent to-70%"></div>
+
+
+    <div class="max-w-[600px] mx-auto px-8 pt-12 pb-8 min-h-screen flex flex-col items-center relative z-1">
+
+      <!-- Badge -->
+      <div class="animate-soft-in animation-delay-100 inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-eco-moss rounded-full text-[0.68rem] font-medium text-eco-sage-dark mb-8 tracking-[0.02em]">
         <Recycle size={13} stroke-width={2} />
         Boguty-Pianki 2026
       </div>
 
-      <div class="eco-hero">
-        <h1 class="eco-headline">
-          Harmonogram odbioru<br/><span class="accent">odpadow</span> w Twoim<br/>kalendarzu
+      <!-- Hero -->
+      <div class="animate-soft-in animation-delay-200 text-center mb-10">
+        <h1 class="eco-headline font-fraunces leading-[1.15] font-normal mb-5 text-eco-ink">
+          Harmonogram odbioru<br/><span class="accent text-eco-sage italic">odpadow</span> w Twoim<br/>kalendarzu
         </h1>
-        <p class="eco-deck">
+        <p class="eco-deck leading-[1.7] text-eco-muted max-w-[40ch] mx-auto font-light">
           Jeden klik i juz. Harmonogram synchronizuje sie z Twoim kalendarzem, a powiadomienia przypomna Ci o odbiorze.
         </p>
       </div>
 
-      <div class="eco-illustration">
-        <div class="eco-dot-line"></div>
-        <Leaf size={24} stroke-width={1.5} />
-        <div class="eco-dot-line"></div>
+      <!-- Illustration divider -->
+      <div class="animate-soft-in animation-delay-300 flex items-center justify-center gap-8 mb-10 opacity-25">
+        <div class="w-[60px] border-t-2 border-dotted border-eco-sage-light"></div>
+        <Leaf size={24} stroke-width={1.5} class="text-eco-sage" />
+        <div class="w-[60px] border-t-2 border-dotted border-eco-sage-light"></div>
       </div>
 
-      <div class="eco-cards">
-        <a class="eco-card" href={webcalUrl}>
-          <div class="eco-card-icon">
-            <AppleIcon />
+      <!-- Calendar cards -->
+      <div class="animate-soft-in animation-delay-350 flex flex-col gap-3 w-full mb-6">
+        <a class="group flex items-center gap-4 px-5 py-4 bg-eco-cream border border-eco-moss rounded-[14px] no-underline text-eco-ink transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)] font-outfit cursor-pointer hover:bg-white hover:border-eco-sage-light hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(122,140,110,0.12)]" href={webcalUrl}>
+          <div class="size-10 rounded-[10px] bg-eco-moss flex items-center justify-center shrink-0 transition-colors duration-300 group-hover:bg-eco-sage">
+            <AppleIcon width={18} height={18} class="group-hover:fill-white group-hover:text-white" />
           </div>
-          <div class="eco-card-text">
-            <div class="eco-card-title">Apple Calendar</div>
-            <div class="eco-card-sub">Automatyczna subskrypcja</div>
+          <div class="flex-1">
+            <div class="font-medium text-[0.9rem] mb-[0.1rem]">Apple Calendar</div>
+            <div class="text-[0.72rem] text-eco-muted">Automatyczna subskrypcja</div>
           </div>
-          <ArrowRight class="eco-card-arrow" size={16} stroke-width={2} />
+          <ArrowRight class="text-eco-sage-light opacity-0 transition-all duration-300 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-eco-sage" size={16} stroke-width={2} />
         </a>
 
-        <a class="eco-card" href={googleUrl}>
-          <div class="eco-card-icon">
-            <GoogleIcon />
+        <a class="group flex items-center gap-4 px-5 py-4 bg-eco-cream border border-eco-moss rounded-[14px] no-underline text-eco-ink transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)] font-outfit cursor-pointer hover:bg-white hover:border-eco-sage-light hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(122,140,110,0.12)]" href={googleUrl}>
+          <div class="size-10 rounded-[10px] bg-eco-moss flex items-center justify-center shrink-0 transition-colors duration-300 group-hover:bg-eco-sage">
+            <GoogleIcon width={18} height={18} class="group-hover:fill-white group-hover:text-white" />
           </div>
-          <div class="eco-card-text">
-            <div class="eco-card-title">Google Calendar</div>
-            <div class="eco-card-sub">Dodaj do konta Google</div>
+          <div class="flex-1">
+            <div class="font-medium text-[0.9rem] mb-[0.1rem]">Google Calendar</div>
+            <div class="text-[0.72rem] text-eco-muted">Dodaj do konta Google</div>
           </div>
-          <ArrowRight class="eco-card-arrow" size={16} stroke-width={2} />
+          <ArrowRight class="text-eco-sage-light opacity-0 transition-all duration-300 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-eco-sage" size={16} stroke-width={2} />
         </a>
 
-        <a class="eco-card" href="/schedule.ics">
-          <div class="eco-card-icon">
-            <Calendar size={18} stroke-width={1.8} />
+        <a class="group flex items-center gap-4 px-5 py-4 bg-eco-cream border border-eco-moss rounded-[14px] no-underline text-eco-ink transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)] font-outfit cursor-pointer hover:bg-white hover:border-eco-sage-light hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(122,140,110,0.12)]" href="/schedule.ics">
+          <div class="size-10 rounded-[10px] bg-eco-moss flex items-center justify-center shrink-0 transition-colors duration-300 group-hover:bg-eco-sage">
+            <Calendar size={18} stroke-width={1.8} class="group-hover:text-white" />
           </div>
-          <div class="eco-card-text">
-            <div class="eco-card-title">Pobierz plik ICS</div>
-            <div class="eco-card-sub">Importuj recznie</div>
+          <div class="flex-1">
+            <div class="font-medium text-[0.9rem] mb-[0.1rem]">Pobierz plik ICS</div>
+            <div class="text-[0.72rem] text-eco-muted">Importuj recznie</div>
           </div>
-          <ArrowRight class="eco-card-arrow" size={16} stroke-width={2} />
+          <ArrowRight class="text-eco-sage-light opacity-0 transition-all duration-300 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-eco-sage" size={16} stroke-width={2} />
         </a>
       </div>
 
-      <div class="eco-link-section">
-        <p class="eco-link-label">Lub skopiuj link do subskrypcji</p>
-        <div class="eco-link-box">
-          <code class="eco-link-url">{icsUrl}</code>
-          <button class="eco-link-copy" id="copy-btn" type="button">
+      <!-- Copy link section -->
+      <div class="animate-soft-in animation-delay-450 w-full mb-12">
+        <p class="text-[0.62rem] uppercase tracking-[0.2em] text-eco-muted mb-2 font-medium text-center">Lub skopiuj link do subskrypcji</p>
+        <div class="flex items-center bg-eco-cream border border-eco-moss rounded-[10px] overflow-hidden">
+          <code class="flex-1 py-3 px-4 font-mono text-[0.68rem] text-eco-sage-dark break-all opacity-60 select-all">{icsUrl}</code>
+          <button class="py-3 px-5 border-none border-l border-eco-moss bg-eco-moss text-eco-sage-dark font-outfit text-[0.7rem] font-medium flex items-center gap-1.5 transition-all duration-200 whitespace-nowrap hover:bg-eco-sage hover:text-white" id="copy-btn" type="button">
             <Copy size={12} stroke-width={2} />
             Kopiuj
           </button>
         </div>
       </div>
 
-      <footer class="eco-footer">
+      <!-- Docs section -->
+      <div class="animate-soft-in animation-delay-550 w-full mb-12">
+        <div class="flex items-center justify-center gap-2 mb-5">
+          <BookOpen size={16} stroke-width={1.8} class="text-eco-sage" />
+          <h2 class="font-fraunces text-[1.15rem] font-normal text-eco-ink">Reczna subskrypcja</h2>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <!-- Apple Calendar accordion -->
+          <div class="eco-docs-item bg-eco-cream border border-eco-moss rounded-xl overflow-hidden">
+            <button class="eco-docs-toggle w-full flex items-center gap-3 py-3.5 px-4.5 border-none bg-transparent font-outfit text-left text-eco-ink transition-colors duration-200 hover:bg-eco-moss/30" type="button">
+              <div class="size-8 rounded-lg bg-eco-moss flex items-center justify-center shrink-0">
+                <AppleIcon width={16} height={16} />
+              </div>
+              <span class="flex-1 font-medium text-[0.85rem]">Apple Calendar (iPhone / Mac)</span>
+              <span class="eco-docs-toggle-chevron text-eco-muted transition-transform duration-300 shrink-0">
+                <ChevronDown size={16} stroke-width={2} />
+              </span>
+            </button>
+            <div class="eco-docs-content">
+              <div class="px-4.5 pb-4.5 border-t border-eco-moss">
+                <div class="eco-docs-step flex gap-3 pt-3.5">
+                  <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                  <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+                    <strong class="font-medium">iPhone/iPad:</strong> Otworz <strong class="font-medium">Ustawienia</strong> &rarr; <strong class="font-medium">Kalendarz</strong> &rarr; <strong class="font-medium">Konta</strong> &rarr; <strong class="font-medium">Dodaj konto</strong> &rarr; <strong class="font-medium">Inne</strong> &rarr; <strong class="font-medium">Dodaj subskrybowany kalendarz</strong>.
+                  </p>
+                </div>
+                <div class="eco-docs-step flex gap-3 pt-3.5">
+                  <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                  <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+                    Wklej adres URL kalendarza:<br/>
+                    <code class="inline-block mt-1 py-0.5 px-2 bg-eco-moss rounded-[5px] font-mono text-[0.65rem] text-eco-sage-dark break-all select-all">{icsUrl}</code>
+                  </p>
+                </div>
+                <div class="eco-docs-step flex gap-3 pt-3.5">
+                  <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                  <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+                    Kliknij <strong class="font-medium">Dalej</strong>, a nastepnie <strong class="font-medium">Zachowaj</strong>. Kalendarz bedzie sie automatycznie aktualizowal.
+                  </p>
+                </div>
+                <div class="eco-docs-step flex gap-3 pt-3.5">
+                  <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">&bull;</span>
+                  <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+                    <strong class="font-medium">Mac:</strong> Otworz aplikacje Kalendarz &rarr; <strong class="font-medium">Plik</strong> &rarr; <strong class="font-medium">Nowa subskrypcja kalendarza...</strong> i wklej powyzszy adres URL.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Google Calendar accordion -->
+          <div class="eco-docs-item bg-eco-cream border border-eco-moss rounded-xl overflow-hidden">
+            <button class="eco-docs-toggle w-full flex items-center gap-3 py-3.5 px-4.5 border-none bg-transparent font-outfit text-left text-eco-ink transition-colors duration-200 hover:bg-eco-moss/30" type="button">
+              <div class="size-8 rounded-lg bg-eco-moss flex items-center justify-center shrink-0">
+                <GoogleIcon width={16} height={16} />
+              </div>
+              <span class="flex-1 font-medium text-[0.85rem]">Google Calendar</span>
+              <span class="eco-docs-toggle-chevron text-eco-muted transition-transform duration-300 shrink-0">
+                <ChevronDown size={16} stroke-width={2} />
+              </span>
+            </button>
+            <div class="eco-docs-content">
+              <div class="px-4.5 pb-4.5 border-t border-eco-moss">
+                <div class="eco-docs-step flex gap-3 pt-3.5">
+                  <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                  <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+                    Otworz <a href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" class="text-eco-sage font-medium">calendar.google.com</a> na komputerze (subskrypcje mozna dodac tylko z przegladarki).
+                  </p>
+                </div>
+                <div class="eco-docs-step flex gap-3 pt-3.5">
+                  <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                  <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+                    W panelu po lewej kliknij <strong class="font-medium">+</strong> obok <strong class="font-medium">Inne kalendarze</strong> &rarr; <strong class="font-medium">Z adresu URL</strong>.
+                  </p>
+                </div>
+                <div class="eco-docs-step flex gap-3 pt-3.5">
+                  <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                  <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+                    Wklej adres URL kalendarza:<br/>
+                    <code class="inline-block mt-1 py-0.5 px-2 bg-eco-moss rounded-[5px] font-mono text-[0.65rem] text-eco-sage-dark break-all select-all">{icsUrl}</code>
+                  </p>
+                </div>
+                <div class="eco-docs-step flex gap-3 pt-3.5">
+                  <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">4</span>
+                  <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+                    Kliknij <strong class="font-medium">Dodaj kalendarz</strong>. Google bedzie automatycznie synchronizowal harmonogram (moze to zajac do 24h).
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="mt-auto text-center text-[0.68rem] text-eco-muted leading-[1.8] [&_a]:text-eco-sage [&_a]:no-underline [&_a]:font-medium hover:[&_a]:underline">
         <p>Dane ze <a href="https://boguty-pianki.pl" target="_blank" rel="noopener noreferrer">strony gminy Boguty-Pianki</a></p>
         <p>Projekt: <a href="https://zochow.ski" target="_blank" rel="noopener noreferrer">zochow.ski</a></p>
       </footer>
     </div>
+
+    <script is:inline>
+      document.querySelectorAll('.eco-docs-toggle').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const item = this.closest('.eco-docs-item');
+          const isOpen = item.classList.contains('open');
+          // Close all items
+          document.querySelectorAll('.eco-docs-item').forEach(function(el) {
+            el.classList.remove('open');
+          });
+          // Toggle clicked item
+          if (!isOpen) {
+            item.classList.add('open');
+          }
+        });
+      });
+    </script>
 
     <script is:inline define:vars={{ icsUrl }}>
       document.getElementById('copy-btn').addEventListener('click', async function() {
