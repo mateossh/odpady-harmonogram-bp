@@ -1,0 +1,413 @@
+---
+import AppleIcon from "../components/icons/Apple.astro";
+import GoogleIcon from "../components/icons/Google.astro";
+import { Calendar, Copy, Leaf, Recycle, ArrowRight } from "@lucide/astro";
+
+import "@fontsource-variable/geist";
+import "../styles/global.css";
+
+const { site } = Astro;
+const icsUrl = `${site!.origin}/schedule.ics`;
+const webcalUrl = `webcal://${site!.hostname}/schedule.ics`;
+const googleUrl = `https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcalUrl)}`;
+---
+
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Harmonogram Odpadow — Boguty-Pianki</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Outfit:wght@300;400;500;600&display=swap');
+
+      :root {
+        --eco-bg: #f4f1eb;
+        --eco-sage: #7a8c6e;
+        --eco-sage-light: #a4b396;
+        --eco-sage-dark: #4a5a3e;
+        --eco-earth: #8b7355;
+        --eco-cream: #faf8f3;
+        --eco-ink: #2c2a25;
+        --eco-muted: #9c9688;
+        --eco-warm: #c4a882;
+        --eco-moss: #d4dcc8;
+      }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        background: var(--eco-bg);
+        color: var(--eco-ink);
+        font-family: 'Outfit', sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Soft organic background blobs */
+      body::before {
+        content: '';
+        position: fixed;
+        top: -20%;
+        right: -10%;
+        width: 50vw;
+        height: 50vw;
+        background: radial-gradient(ellipse, var(--eco-moss) 0%, transparent 70%);
+        opacity: 0.5;
+        pointer-events: none;
+        border-radius: 50%;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        bottom: -15%;
+        left: -15%;
+        width: 45vw;
+        height: 45vw;
+        background: radial-gradient(ellipse, rgba(196, 168, 130, 0.2) 0%, transparent 70%);
+        pointer-events: none;
+        border-radius: 50%;
+      }
+
+      .eco-page {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 3rem 2rem 2rem;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .eco-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.4rem 0.9rem;
+        background: var(--eco-moss);
+        border-radius: 100px;
+        font-size: 0.68rem;
+        font-weight: 500;
+        color: var(--eco-sage-dark);
+        margin-bottom: 2rem;
+        letter-spacing: 0.02em;
+      }
+
+      .eco-badge :global(svg) {
+        width: 13px;
+        height: 13px;
+      }
+
+      .eco-hero {
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+
+      .eco-headline {
+        font-family: 'Fraunces', serif;
+        font-size: clamp(2rem, 5.5vw, 3rem);
+        line-height: 1.15;
+        font-weight: 400;
+        margin-bottom: 1.25rem;
+        font-optical-sizing: auto;
+        color: var(--eco-ink);
+      }
+
+      .eco-headline .accent {
+        color: var(--eco-sage);
+        font-style: italic;
+        font-variation-settings: "SOFT" 100, "WONK" 1;
+      }
+
+      .eco-deck {
+        font-size: clamp(0.9rem, 2vw, 1.05rem);
+        line-height: 1.7;
+        color: var(--eco-muted);
+        max-width: 40ch;
+        margin: 0 auto;
+        font-weight: 300;
+      }
+
+      .eco-illustration {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2.5rem;
+        opacity: 0.25;
+      }
+
+      .eco-illustration :global(svg) {
+        color: var(--eco-sage);
+      }
+
+      .eco-dot-line {
+        width: 60px;
+        border-top: 2px dotted var(--eco-sage-light);
+      }
+
+      .eco-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        width: 100%;
+        margin-bottom: 1.5rem;
+      }
+
+      .eco-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+        background: var(--eco-cream);
+        border: 1px solid var(--eco-moss);
+        border-radius: 14px;
+        text-decoration: none;
+        color: var(--eco-ink);
+        transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+        font-family: 'Outfit', sans-serif;
+        cursor: pointer;
+      }
+
+      .eco-card:hover {
+        background: white;
+        border-color: var(--eco-sage-light);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(122, 140, 110, 0.12);
+      }
+
+      .eco-card-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: var(--eco-moss);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: background 0.3s ease;
+      }
+
+      .eco-card:hover .eco-card-icon {
+        background: var(--eco-sage);
+      }
+
+      .eco-card-icon :global(svg) {
+        width: 18px;
+        height: 18px;
+      }
+
+      .eco-card:hover .eco-card-icon :global(svg) {
+        fill: white;
+        color: white;
+      }
+
+      .eco-card-text {
+        flex: 1;
+      }
+
+      .eco-card-title {
+        font-weight: 500;
+        font-size: 0.9rem;
+        margin-bottom: 0.1rem;
+      }
+
+      .eco-card-sub {
+        font-size: 0.72rem;
+        color: var(--eco-muted);
+      }
+
+      .eco-card-arrow {
+        color: var(--eco-sage-light);
+        opacity: 0;
+        transition: all 0.3s ease;
+        transform: translateX(-4px);
+      }
+
+      .eco-card:hover .eco-card-arrow {
+        opacity: 1;
+        transform: translateX(0);
+        color: var(--eco-sage);
+      }
+
+      .eco-link-section {
+        width: 100%;
+        margin-bottom: 3rem;
+      }
+
+      .eco-link-label {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--eco-muted);
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        text-align: center;
+      }
+
+      .eco-link-box {
+        display: flex;
+        align-items: center;
+        background: var(--eco-cream);
+        border: 1px solid var(--eco-moss);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .eco-link-url {
+        flex: 1;
+        padding: 0.8rem 1rem;
+        font-family: 'JetBrains Mono', 'Courier New', monospace;
+        font-size: 0.68rem;
+        color: var(--eco-sage-dark);
+        word-break: break-all;
+        opacity: 0.6;
+        user-select: all;
+      }
+
+      .eco-link-copy {
+        padding: 0.8rem 1.25rem;
+        border: none;
+        border-left: 1px solid var(--eco-moss);
+        background: var(--eco-moss);
+        color: var(--eco-sage-dark);
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+      }
+
+      .eco-link-copy:hover {
+        background: var(--eco-sage);
+        color: white;
+      }
+
+      .eco-footer {
+        margin-top: auto;
+        text-align: center;
+        font-size: 0.68rem;
+        color: var(--eco-muted);
+        line-height: 1.8;
+      }
+
+      .eco-footer a {
+        color: var(--eco-sage);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .eco-footer a:hover {
+        text-decoration: underline;
+      }
+
+      @keyframes softIn {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .eco-badge { animation: softIn 0.5s ease 0.1s both; }
+      .eco-hero { animation: softIn 0.5s ease 0.2s both; }
+      .eco-illustration { animation: softIn 0.5s ease 0.3s both; }
+      .eco-cards { animation: softIn 0.5s ease 0.35s both; }
+      .eco-link-section { animation: softIn 0.5s ease 0.45s both; }
+    </style>
+  </head>
+  <body>
+    <div class="eco-page">
+      <div class="eco-badge">
+        <Recycle size={13} stroke-width={2} />
+        Boguty-Pianki 2026
+      </div>
+
+      <div class="eco-hero">
+        <h1 class="eco-headline">
+          Harmonogram odbioru<br/><span class="accent">odpadow</span> w Twoim<br/>kalendarzu
+        </h1>
+        <p class="eco-deck">
+          Jeden klik i juz. Harmonogram synchronizuje sie z Twoim kalendarzem, a powiadomienia przypomna Ci o odbiorze.
+        </p>
+      </div>
+
+      <div class="eco-illustration">
+        <div class="eco-dot-line"></div>
+        <Leaf size={24} stroke-width={1.5} />
+        <div class="eco-dot-line"></div>
+      </div>
+
+      <div class="eco-cards">
+        <a class="eco-card" href={webcalUrl}>
+          <div class="eco-card-icon">
+            <AppleIcon />
+          </div>
+          <div class="eco-card-text">
+            <div class="eco-card-title">Apple Calendar</div>
+            <div class="eco-card-sub">Automatyczna subskrypcja</div>
+          </div>
+          <ArrowRight class="eco-card-arrow" size={16} stroke-width={2} />
+        </a>
+
+        <a class="eco-card" href={googleUrl}>
+          <div class="eco-card-icon">
+            <GoogleIcon />
+          </div>
+          <div class="eco-card-text">
+            <div class="eco-card-title">Google Calendar</div>
+            <div class="eco-card-sub">Dodaj do konta Google</div>
+          </div>
+          <ArrowRight class="eco-card-arrow" size={16} stroke-width={2} />
+        </a>
+
+        <a class="eco-card" href="/schedule.ics">
+          <div class="eco-card-icon">
+            <Calendar size={18} stroke-width={1.8} />
+          </div>
+          <div class="eco-card-text">
+            <div class="eco-card-title">Pobierz plik ICS</div>
+            <div class="eco-card-sub">Importuj recznie</div>
+          </div>
+          <ArrowRight class="eco-card-arrow" size={16} stroke-width={2} />
+        </a>
+      </div>
+
+      <div class="eco-link-section">
+        <p class="eco-link-label">Lub skopiuj link do subskrypcji</p>
+        <div class="eco-link-box">
+          <code class="eco-link-url">{icsUrl}</code>
+          <button class="eco-link-copy" id="copy-btn" type="button">
+            <Copy size={12} stroke-width={2} />
+            Kopiuj
+          </button>
+        </div>
+      </div>
+
+      <footer class="eco-footer">
+        <p>Dane ze <a href="https://boguty-pianki.pl" target="_blank" rel="noopener noreferrer">strony gminy Boguty-Pianki</a></p>
+        <p>Projekt: <a href="https://zochow.ski" target="_blank" rel="noopener noreferrer">zochow.ski</a></p>
+      </footer>
+    </div>
+
+    <script is:inline define:vars={{ icsUrl }}>
+      document.getElementById('copy-btn').addEventListener('click', async function() {
+        await navigator.clipboard.writeText(icsUrl);
+        const btn = this;
+        btn.innerHTML = '&#10003; Skopiowano';
+        btn.style.background = '#7a8c6e';
+        btn.style.color = 'white';
+        setTimeout(() => {
+          btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Kopiuj';
+          btn.style.background = '';
+          btn.style.color = '';
+        }, 2000);
+      });
+    </script>
+  </body>
+</html>
