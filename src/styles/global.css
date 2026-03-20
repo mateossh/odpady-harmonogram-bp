@@ -97,6 +97,10 @@
   --font-fraunces: "Fraunces", serif;
   --font-outfit: "Outfit", sans-serif;
 
+  /* eco landing — fluid type (→ text-eco-headline, text-eco-deck) */
+  --text-eco-headline: clamp(2rem, 5.5vw, 3rem);
+  --text-eco-deck: clamp(0.9rem, 2vw, 1.05rem);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -139,6 +143,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -175,6 +180,14 @@
   .animation-delay-550 {
     animation-delay: 0.55s;
   }
+
+  .font-optical-auto {
+    font-optical-sizing: auto;
+  }
+
+  .font-fraunces-accent {
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+  }
 }
 
 @theme {
@@ -185,9 +198,37 @@
       opacity: 0;
       transform: translateY(16px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
+}
+
+/*  details magic ?? */
+
+:root {
+  interpolate-size: allow-keywords;
+}
+
+details summary {
+  list-style: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details::details-content {
+  overflow: hidden;
+  height: 0;
+  transition:
+    height 0.3s,
+    content-visibility 0.3s;
+  transition-behavior: allow-discrete;
+}
+
+details[open]::details-content {
+  height: auto;
 }
