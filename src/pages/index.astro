@@ -1,124 +1,169 @@
 ---
-import Button from "../components/Button.astro";
-import Tooltip from "../components/Tooltip.astro";
 import AppleIcon from "../components/icons/Apple.astro";
 import GoogleIcon from "../components/icons/Google.astro";
-import OutlookIcon from "../components/icons/Outlook.astro";
-import Layout from "../layouts/Layout.astro";
+import CalendarCard from "../components/CalendarCard.astro";
+import { Calendar, Copy, Leaf, Recycle, BookOpen, ChevronDown } from "@lucide/astro";
 
-import { Calendar } from '@lucide/astro';
+import NewLayout from '../layouts/NewLayout.astro';
 
 const { site } = Astro;
 
+const icsUrl = `${site!.origin}/schedule.ics`;
+const webcalUrl = `webcal://${site!.hostname}/schedule.ics`;
+const googleUrl = `https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcalUrl)}`;
+
 const getIcon = (iconName: string, props = {}) => {
   switch (iconName) {
-    case "apple": return { Component: AppleIcon, props: { class: "-mt-0.5", ...props } };
+    case "apple": return { Component: AppleIcon, props };
     case "google": return { Component: GoogleIcon, props };
-    case "outlook": return { Component: OutlookIcon, props };
-    case "calendar": return { Component: Calendar, props: { "stroke-width": 3, ...props }};
+    case "calendar": return { Component: Calendar, props: { "stroke-width": 2, class: "-mt-0.5", ...props }};
   }
 }
 
 const links = [
   {
-    title: "Kalendarz Apple",
-    icon: "apple",
-    iconClass: "-mt-0.5",
-    href: `webcal://${site!.hostname}/schedule.ics`,
-    props: {
-      "data-umami-event": "ics button",
-      "data-umami-event-type": "apple",
-    }
+    title: 'Kalendarz Apple',
+    subtitle: 'Dodaj do konta iCloud',
+    href: webcalUrl,
+    icon: 'apple',
   },
   {
-    title: "Kalendarz Google",
-    href: `https://calendar.google.com/calendar/r?cid=${encodeURIComponent(`webcal://${site!.hostname}/schedule.ics`)}`,
-    icon: "google",
-    props: {
-      "data-umami-event": "ics button",
-      "data-umami-event-type": "google",
-    },
+    title: 'Kalendarz Google',
+    subtitle: 'Dodaj do konta Google',
+    href: googleUrl,
+    icon: 'google',
   },
   {
-    title: "Kalendarz Outlook",
-    href: `https://outlook.live.com/calendar/0/addcalendar?url=${encodeURIComponent(`https://${site!.hostname}/schedule.ics`)}`,
-    icon: "outlook",
-    props: {
-      disabled: true,
-      "data-umami-event": "ics button",
-      "data-umami-event-type": "outlook",
-    },
-    tooltipText: "Nie zaimplementowane, dodaj ręcznie z pliku .ics",
-  },
-  {
-    title: "Link do pliku .ics",
+    title: 'Pobierz plik ICS',
+    subtitle: 'Importuj ręcznie dane na 2026 rok',
     href: `/schedule.ics`,
-    icon: "calendar",
-    props: {
-      "data-umami-event": "ics button",
-      "data-umami-event-type": "file",
-    }
+    icon: 'calendar',
   },
 ]
 ---
+<NewLayout>
+  <main class="max-w-[600px] mx-auto p-8 min-h-screen flex flex-col items-center relative z-1">
 
-<Layout>
-  <header class="flex flex-col gap-3">
-    <h1 class="tracking-[-0.0375em] text-pretty text-neutral-900 max-w-4xl text-2xl sm:text-4xl/[1.2] md:text-5xl/[1.2] font-semibold">
-      Harmonogram odbioru odpadów na terenie gminy Boguty-Pianki, bezpośrednio w Twoim kalendarzu.
-    </h1>
+    <!-- Badge -->
+    <div class="animate-soft-in animation-delay-100 inline-flex items-center px-3.5 py-1.5 bg-eco-moss rounded-full text-[0.68rem] font-medium text-eco-sage-dark mt-4 mb-8 tracking-[0.02em]">
+      <Recycle size={13} stroke-width={2} />
+    </div>
 
-    <p class="text-gray-700 text-pretty text-lg/7 sm:text-xl/8 font-medium">
-      Nigdy więcej nie przegap dnia odbioru śmieci. Zsynchronizuj harmonogram z kalendarzem i otrzymuj powiadomienia w twoim telefonie.
-    </p>
-  </header>
+    <!-- Hero -->
+    <header class="animate-soft-in animation-delay-200 text-center">
+      <h1 class="text-eco-headline font-optical-auto font-fraunces leading-[1.15] font-normal mb-5 text-eco-ink">
+        Harmonogram odbioru<br/><span class="font-fraunces-accent text-eco-sage italic">odpadów</span> w Twoim<br/>kalendarzu
+      </h1>
+      <p class="text-eco-deck leading-[1.7] text-eco-muted max-w-[40ch] mx-auto font-light">
+        Jeden klik i już. Harmonogram synchronizuje się z Twoim kalendarzem, a powiadomienia przypomną Ci o odbiorze.
+      </p>
+    </header>
 
-  <section class="bg-gray-50/50 rounded-xl p-6 w-full border border-gray-200 flex flex-col gap-6">
-    <h2 class="text-lg text-gray-800">Aby dodać harmonogram do kalendarza, wciśnij guzior.</h2>
+    <!-- Illustration divider -->
+    <div class="animate-soft-in animation-delay-300 flex items-center justify-center gap-8 my-10 opacity-25">
+      <div class="w-[60px] border-t-2 border-dotted border-eco-sage-light"></div>
+      <Leaf size={24} stroke-width={2} class="text-eco-sage" />
+      <div class="w-[60px] border-t-2 border-dotted border-eco-sage-light"></div>
+    </div>
 
-    <nav class="flex flex-col lg:flex-row lg:justify-between gap-3 flex-1 w-full lg:w-auto select-none">
-      {links.map((link) => {
+    <!-- Calendar cards -->
+    <section class="animate-soft-in animation-delay-350 flex flex-col gap-3 w-full">
+      {links.map(link => {
         const iconData = getIcon(link.icon);
-
-        if (link.tooltipText) {
-          return (
-            <Tooltip text={link.tooltipText}>
-              <Button href={link.href} size="fat" variant="outline" class="grow" data-disabled="true" {...link.props}>
-                {iconData && <iconData.Component {...iconData.props} />}
-                {link.title}
-              </Button>
-            </Tooltip>
-          );
-        }
+        const { href, title, subtitle } = link;
 
         return (
-          <Button href={link.href} size="fat" variant="outline" class="" data-disabled="true" {...link.props}>
-            {iconData && <iconData.Component {...iconData.props} />}
-            {link.title}
-          </Button>
+          <CalendarCard href={href} title={title} subtitle={subtitle}>
+            {iconData && <iconData.Component {...iconData.props} width={18} height={18} />}
+          </CalendarCard>
         )
-
       })}
-    </nav>
-  </section>
+    </section>
 
-  <footer class="text-gray-500 text-xs w-full">
-    <p class="flex flex-col gap-1">
-      <span>
-        Dane wygenerowane na podstawie harmonogramu ze
-        <Button class="text-xs" size="slim" variant="link" href="https://boguty-pianki.pl" target="_blank" rel="noopener noreferrer"
-          data-umami-event="outbound-link-click"
-          data-umami-event-url="https://boguty-pianki.pl"
-        >
-          strony internetowej Urzędu Gminy Boguty-Pianki
-        </Button>
-      </span>
-      <span>
-        Autor projektu: <Button class="text-xs" size="slim" variant="link" href="https://zochow.ski" target="_blank" rel="noopener noreferrer"
-        data-umami-event="outbound-link-click"
-        data-umami-event-url="https://zochow.ski"
-        >zochow.ski</Button>
-      </span>
-    </p>
-  </footer>
-</Layout>
+    <!-- Copy link section -->
+    <section class="animate-soft-in animation-delay-450 w-full mt-6 mb-12">
+      <p class="text-[0.62rem] uppercase tracking-[0.2em] text-eco-muted mb-2 font-medium text-center">Lub skopiuj link do subskrypcji</p>
+
+      <div class="flex items-stretch bg-eco-cream border border-eco-moss rounded-[10px] overflow-hidden">
+        <code class="flex-1 font-medium py-3 px-4 font-mono text-[0.68rem] text-eco-sage-dark break-all opacity-60 select-all">{icsUrl}</code>
+
+        <button class="px-5 bg-eco-moss text-eco-sage-dark font-outfit text-xs font-medium flex items-center gap-1.5 transition-all duration-200 whitespace-nowrap hover:bg-eco-sage hover:text-white" id="copy-btn" type="button">
+          <Copy size={12} stroke-width={2.5} />
+          Kopiuj
+        </button>
+      </div>
+    </section>
+
+    <!-- Docs section -->
+    <section class="animate-soft-in animation-delay-550 w-full mb-12">
+      <div class="flex items-center justify-center gap-2 mb-5">
+        <BookOpen size={16} stroke-width={2} class="text-eco-sage" />
+        <h2 class="font-fraunces text-[1.15rem] font-normal text-eco-ink">Ręczna subskrypcja</h2>
+      </div>
+
+      <!-- Google Calendar disclosure -->
+      <details class="group bg-eco-cream border border-eco-moss rounded-xl overflow-hidden">
+        <summary class="w-full flex items-center gap-3 py-3.5 px-4.5 cursor-pointer font-outfit text-left text-eco-ink transition-colors duration-200 hover:bg-eco-moss/30">
+          <div class="size-8 rounded-lg bg-eco-moss flex items-center justify-center shrink-0">
+            <GoogleIcon width={16} height={16} />
+          </div>
+          <span class="flex-1 font-medium text-[0.85rem]">Kalendarz Google</span>
+          <span class="group-open:rotate-180 text-eco-muted transition-transform duration-300 shrink-0">
+            <ChevronDown size={16} stroke-width={2} />
+          </span>
+        </summary>
+
+        <div class="px-4.5 pb-4.5 border-t border-eco-moss">
+          <div class="flex gap-3 pt-3.5">
+            <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">1</span>
+            <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+              Otwórz <a href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" class="text-eco-sage font-medium">calendar.google.com</a> w przeglądarce internetowej (subskrypcji nie można dodać w aplikacji Kalendarz Google).
+            </p>
+          </div>
+          <div class="flex gap-3 pt-3.5">
+            <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">2</span>
+            <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+              W panelu po lewej kliknij <strong class="font-medium">+</strong> obok <strong class="font-medium">Inne kalendarze</strong> &rarr; <strong class="font-medium">Z adresu URL</strong>.
+            </p>
+          </div>
+          <div class="flex gap-3 pt-3.5">
+            <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">3</span>
+            <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+              Wklej adres URL kalendarza:<br/>
+              <code class="inline-block mt-1 py-0.5 px-2 bg-eco-moss rounded-[5px] font-mono text-[0.65rem] text-eco-sage-dark break-all select-all font-medium">{icsUrl}</code>
+            </p>
+          </div>
+          <div class="flex gap-3 pt-3.5">
+            <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">4</span>
+            <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+              Kliknij <strong class="font-medium">Dodaj kalendarz</strong>. Google będzie automatycznie synchronizował harmonogram (moze to zajac do 24h).
+            </p>
+          </div>
+        </div>
+      </details>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="animate-soft-in animation-delay-550 text-center text-[0.68rem] text-eco-muted leading-[1.8]">
+      <p>Dane ze <a href="https://boguty-pianki.pl" target="_blank" rel="noopener noreferrer" class="text-eco-sage no-underline font-medium hover:underline">strony Urzędu Gminy Boguty-Pianki</a></p>
+      <p>Projekt: <a href="https://zochow.ski" target="_blank" rel="noopener noreferrer" class="text-eco-sage no-underline font-medium hover:underline">zochow.ski</a></p>
+    </footer>
+
+  </main>
+
+  <script is:inline define:vars={{ icsUrl }}>
+    document.getElementById('copy-btn').addEventListener('click', async function() {
+      await navigator.clipboard.writeText(icsUrl);
+      const btn = this;
+      btn.innerHTML = '&#10003; Skopiowano';
+      btn.style.background = '#7a8c6e';
+      btn.style.color = 'white';
+      setTimeout(() => {
+        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Kopiuj';
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 2000);
+    });
+  </script>
+</NewLayout>

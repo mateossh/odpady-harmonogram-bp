@@ -1,0 +1,124 @@
+---
+import Button from "../components/Button.astro";
+import Tooltip from "../components/Tooltip.astro";
+import AppleIcon from "../components/icons/Apple.astro";
+import GoogleIcon from "../components/icons/Google.astro";
+import OutlookIcon from "../components/icons/Outlook.astro";
+import Layout from "../layouts/Layout.astro";
+
+import { Calendar } from '@lucide/astro';
+
+const { site } = Astro;
+
+const getIcon = (iconName: string, props = {}) => {
+  switch (iconName) {
+    case "apple": return { Component: AppleIcon, props: { class: "-mt-0.5", ...props } };
+    case "google": return { Component: GoogleIcon, props };
+    case "outlook": return { Component: OutlookIcon, props };
+    case "calendar": return { Component: Calendar, props: { "stroke-width": 3, ...props }};
+  }
+}
+
+const links = [
+  {
+    title: "Kalendarz Apple",
+    icon: "apple",
+    iconClass: "-mt-0.5",
+    href: `webcal://${site!.hostname}/schedule.ics`,
+    props: {
+      "data-umami-event": "ics button",
+      "data-umami-event-type": "apple",
+    }
+  },
+  {
+    title: "Kalendarz Google",
+    href: `https://calendar.google.com/calendar/r?cid=${encodeURIComponent(`webcal://${site!.hostname}/schedule.ics`)}`,
+    icon: "google",
+    props: {
+      "data-umami-event": "ics button",
+      "data-umami-event-type": "google",
+    },
+  },
+  {
+    title: "Kalendarz Outlook",
+    href: `https://outlook.live.com/calendar/0/addcalendar?url=${encodeURIComponent(`https://${site!.hostname}/schedule.ics`)}`,
+    icon: "outlook",
+    props: {
+      disabled: true,
+      "data-umami-event": "ics button",
+      "data-umami-event-type": "outlook",
+    },
+    tooltipText: "Nie zaimplementowane, dodaj ręcznie z pliku .ics",
+  },
+  {
+    title: "Link do pliku .ics",
+    href: `/schedule.ics`,
+    icon: "calendar",
+    props: {
+      "data-umami-event": "ics button",
+      "data-umami-event-type": "file",
+    }
+  },
+]
+---
+
+<Layout>
+  <header class="flex flex-col gap-3">
+    <h1 class="tracking-[-0.0375em] text-pretty text-neutral-900 max-w-4xl text-2xl sm:text-4xl/[1.2] md:text-5xl/[1.2] font-semibold">
+      Harmonogram odbioru odpadów na terenie gminy Boguty-Pianki, bezpośrednio w Twoim kalendarzu.
+    </h1>
+
+    <p class="text-gray-700 text-pretty text-lg/7 sm:text-xl/8 font-medium">
+      Nigdy więcej nie przegap dnia odbioru śmieci. Zsynchronizuj harmonogram z kalendarzem i otrzymuj powiadomienia w twoim telefonie.
+    </p>
+  </header>
+
+  <section class="bg-gray-50/50 rounded-xl p-6 w-full border border-gray-200 flex flex-col gap-6">
+    <h2 class="text-lg text-gray-800">Aby dodać harmonogram do kalendarza, wciśnij guzior.</h2>
+
+    <nav class="flex flex-col lg:flex-row lg:justify-between gap-3 flex-1 w-full lg:w-auto select-none">
+      {links.map((link) => {
+        const iconData = getIcon(link.icon);
+
+        if (link.tooltipText) {
+          return (
+            <Tooltip text={link.tooltipText}>
+              <Button href={link.href} size="fat" variant="outline" class="grow" data-disabled="true" {...link.props}>
+                {iconData && <iconData.Component {...iconData.props} />}
+                {link.title}
+              </Button>
+            </Tooltip>
+          );
+        }
+
+        return (
+          <Button href={link.href} size="fat" variant="outline" class="" data-disabled="true" {...link.props}>
+            {iconData && <iconData.Component {...iconData.props} />}
+            {link.title}
+          </Button>
+        )
+
+      })}
+    </nav>
+  </section>
+
+  <footer class="text-gray-500 text-xs w-full">
+    <p class="flex flex-col gap-1">
+      <span>
+        Dane wygenerowane na podstawie harmonogramu ze
+        <Button class="text-xs" size="slim" variant="link" href="https://boguty-pianki.pl" target="_blank" rel="noopener noreferrer"
+          data-umami-event="outbound-link-click"
+          data-umami-event-url="https://boguty-pianki.pl"
+        >
+          strony internetowej Urzędu Gminy Boguty-Pianki
+        </Button>
+      </span>
+      <span>
+        Autor projektu: <Button class="text-xs" size="slim" variant="link" href="https://zochow.ski" target="_blank" rel="noopener noreferrer"
+        data-umami-event="outbound-link-click"
+        data-umami-event-url="https://zochow.ski"
+        >zochow.ski</Button>
+      </span>
+    </p>
+  </footer>
+</Layout>
