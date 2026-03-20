@@ -1,0 +1,31 @@
+---
+import { ArrowRight } from "@lucide/astro";
+
+interface Props {
+  href: string;
+  title: string;
+  subtitle: string;
+}
+
+const { href, title, subtitle } = Astro.props;
+---
+
+<a
+    class="group flex items-center gap-4 px-5 py-4 bg-eco-cream border border-eco-moss rounded-[14px] no-underline text-eco-ink transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)] font-outfit cursor-pointer hover:bg-eco-moss/30 hover:border-eco-sage-light hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(122,140,110,0.12)]"
+  href={href}
+>
+  <div
+      class="size-10 rounded-[10px] bg-eco-moss flex items-center justify-center shrink-0 transition-colors duration-300 group-hover:bg-eco-sage/30"
+  >
+    <slot />
+  </div>
+  <div class="flex-1">
+    <div class="font-medium text-sm mb-0.5">{title}</div>
+    <div class="text-xs text-eco-muted">{subtitle}</div>
+  </div>
+  <ArrowRight
+    class="text-eco-sage-light opacity-0 transition-all duration-300 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-eco-sage"
+    size={16}
+    stroke-width={2}
+  />
+</a>

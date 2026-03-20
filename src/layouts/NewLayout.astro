@@ -1,0 +1,23 @@
+---
+import Head from "../components/Head.astro";
+
+import "@fontsource-variable/geist";
+import "../styles/global.css";
+---
+
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <Head title="Harmonogram odbioru odpadów na terenie gminy Boguty-Pianki" />
+  </head>
+  <body class="bg-eco-bg text-eco-ink font-outfit min-h-screen overflow-x-hidden relative">
+    <!-- Blobs -->
+    <div class="fixed size-[50vw] -top-1/5 -right-1/10 rounded-full opacity-50 bg-radial from-(--color-eco-moss) from-0% to-transparent to-70%"></div>
+    <div class="fixed size-[45vw] -bottom-[15%] -left-[15%] rounded-full opacity-50 bg-radial from-(--color-dunno) from-0% to-transparent to-70%"></div>
+
+    <slot />
+  </body>
+</html>

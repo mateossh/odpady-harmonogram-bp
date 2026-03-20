@@ -5,6 +5,7 @@
 
 @theme {
   --font-sans: "Geist Variable", "sans-serif";
+  --font-mono: "Sometype Mono", "monospace";
 }
 
 :root {
