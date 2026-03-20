@@ -11,136 +11,128 @@ const icsUrl = `${site!.origin}/schedule.ics`;
 const webcalUrl = `webcal://${site!.hostname}/schedule.ics`;
 const googleUrl = `https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcalUrl)}`;
 ---
+<NewLayout>
+  <main class="max-w-[600px] mx-auto px-8 pt-12 pb-8 min-h-screen flex flex-col items-center relative z-1">
 
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Outfit:wght@300;400;500;600&display=swap');
-      @import url('https://fonts.googleapis.com/css2?family=Sometype+Mono:ital,wght@0,400..700;1,400..700&display=swap');
+    <!-- Badge -->
+    <div class="animate-soft-in animation-delay-100 inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-eco-moss rounded-full text-[0.68rem] font-medium text-eco-sage-dark mb-8 tracking-[0.02em]">
+      <Recycle size={13} stroke-width={2} />
+    </div>
 
-    </style>
-  <NewLayout>
+    <!-- Hero -->
+    <header class="animate-soft-in animation-delay-200 text-center mb-10">
+      <h1 class="text-eco-headline font-optical-auto font-fraunces leading-[1.15] font-normal mb-5 text-eco-ink">
+        Harmonogram odbioru<br/><span class="font-fraunces-accent text-eco-sage italic">odpadów</span> w Twoim<br/>kalendarzu
+      </h1>
+      <p class="text-eco-deck leading-[1.7] text-eco-muted max-w-[40ch] mx-auto font-light">
+        Jeden klik i już. Harmonogram synchronizuje się z Twoim kalendarzem, a powiadomienia przypomną Ci o odbiorze.
+      </p>
+    </header>
 
+    <!-- Illustration divider -->
+    <div class="animate-soft-in animation-delay-300 flex items-center justify-center gap-8 mb-10 opacity-25">
+      <div class="w-[60px] border-t-2 border-dotted border-eco-sage-light"></div>
+      <Leaf size={24} stroke-width={2} class="text-eco-sage" />
+      <div class="w-[60px] border-t-2 border-dotted border-eco-sage-light"></div>
+    </div>
 
-    <main class="max-w-[600px] mx-auto px-8 pt-12 pb-8 min-h-screen flex flex-col items-center relative z-1">
+    <!-- Calendar cards -->
+    <section class="animate-soft-in animation-delay-350 flex flex-col gap-3 w-full mb-6">
+      <CalendarCard href={webcalUrl} title="Kalendarz Apple" subtitle="Dodaj do konta iCloud">
+        <AppleIcon width={18} height={18} />
+      </CalendarCard>
+      <CalendarCard href={googleUrl} title="Kalendarz Google" subtitle="Dodaj do konta Google">
+        <GoogleIcon width={18} height={18} />
+      </CalendarCard>
+      <CalendarCard href="/schedule.ics" title="Pobierz plik ICS" subtitle="Importuj ręcznie dane na 2026 rok">
+        <Calendar size={18} stroke-width={2} />
+      </CalendarCard>
+    </section>
 
-      <!-- Badge -->
-      <div class="animate-soft-in animation-delay-100 inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-eco-moss rounded-full text-[0.68rem] font-medium text-eco-sage-dark mb-8 tracking-[0.02em]">
-        <Recycle size={13} stroke-width={2} />
+    <!-- Copy link section -->
+    <section class="animate-soft-in animation-delay-450 w-full mb-12">
+      <p class="text-[0.62rem] uppercase tracking-[0.2em] text-eco-muted mb-2 font-medium text-center">Lub skopiuj link do subskrypcji</p>
+
+      <div class="flex items-stretch bg-eco-cream border border-eco-moss rounded-[10px] overflow-hidden">
+        <code class="flex-1 font-medium py-3 px-4 font-mono text-[0.68rem] text-eco-sage-dark break-all opacity-60 select-all">{icsUrl}</code>
+
+        <button class="px-5 bg-eco-moss text-eco-sage-dark font-outfit text-xs font-medium flex items-center gap-1.5 transition-all duration-200 whitespace-nowrap hover:bg-eco-sage hover:text-white" id="copy-btn" type="button">
+          <Copy size={12} stroke-width={2.5} />
+          Kopiuj
+        </button>
+      </div>
+    </section>
+
+    <!-- Docs section -->
+    <section class="animate-soft-in animation-delay-550 w-full mb-12">
+      <div class="flex items-center justify-center gap-2 mb-5">
+        <BookOpen size={16} stroke-width={2} class="text-eco-sage" />
+        <h2 class="font-fraunces text-[1.15rem] font-normal text-eco-ink">Ręczna subskrypcja</h2>
       </div>
 
-      <!-- Hero -->
-      <header class="animate-soft-in animation-delay-200 text-center mb-10">
-        <h1 class="text-eco-headline font-optical-auto font-fraunces leading-[1.15] font-normal mb-5 text-eco-ink">
-          Harmonogram odbioru<br/><span class="font-fraunces-accent text-eco-sage italic">odpadów</span> w Twoim<br/>kalendarzu
-        </h1>
-        <p class="text-eco-deck leading-[1.7] text-eco-muted max-w-[40ch] mx-auto font-light">
-          Jeden klik i już. Harmonogram synchronizuje się z Twoim kalendarzem, a powiadomienia przypomną Ci o odbiorze.
-        </p>
-      </header>
-
-      <!-- Illustration divider -->
-      <div class="animate-soft-in animation-delay-300 flex items-center justify-center gap-8 mb-10 opacity-25">
-        <div class="w-[60px] border-t-2 border-dotted border-eco-sage-light"></div>
-        <Leaf size={24} stroke-width={2} class="text-eco-sage" />
-        <div class="w-[60px] border-t-2 border-dotted border-eco-sage-light"></div>
-      </div>
-
-      <!-- Calendar cards -->
-      <section class="animate-soft-in animation-delay-350 flex flex-col gap-3 w-full mb-6">
-        <CalendarCard href={webcalUrl} title="Kalendarz Apple" subtitle="Dodaj do konta iCloud">
-          <AppleIcon width={18} height={18} />
-        </CalendarCard>
-        <CalendarCard href={googleUrl} title="Kalendarz Google" subtitle="Dodaj do konta Google">
-          <GoogleIcon width={18} height={18} />
-        </CalendarCard>
-        <CalendarCard href="/schedule.ics" title="Pobierz plik ICS" subtitle="Importuj ręcznie dane na 2026 rok">
-          <Calendar size={18} stroke-width={2} />
-        </CalendarCard>
-      </section>
-
-      <!-- Copy link section -->
-      <section class="animate-soft-in animation-delay-450 w-full mb-12">
-        <p class="text-[0.62rem] uppercase tracking-[0.2em] text-eco-muted mb-2 font-medium text-center">Lub skopiuj link do subskrypcji</p>
-
-        <div class="flex items-stretch bg-eco-cream border border-eco-moss rounded-[10px] overflow-hidden">
-          <code class="flex-1 font-medium py-3 px-4 font-mono text-[0.68rem] text-eco-sage-dark break-all opacity-60 select-all">{icsUrl}</code>
-
-          <button class="px-5 bg-eco-moss text-eco-sage-dark font-outfit text-xs font-medium flex items-center gap-1.5 transition-all duration-200 whitespace-nowrap hover:bg-eco-sage hover:text-white" id="copy-btn" type="button">
-            <Copy size={12} stroke-width={2.5} />
-            Kopiuj
-          </button>
-        </div>
-      </section>
-
-      <!-- Docs section -->
-      <section class="animate-soft-in animation-delay-550 w-full mb-12">
-        <div class="flex items-center justify-center gap-2 mb-5">
-          <BookOpen size={16} stroke-width={2} class="text-eco-sage" />
-          <h2 class="font-fraunces text-[1.15rem] font-normal text-eco-ink">Ręczna subskrypcja</h2>
-        </div>
-
-        <!-- Google Calendar disclosure -->
-        <details class="group bg-eco-cream border border-eco-moss rounded-xl overflow-hidden">
-          <summary class="w-full flex items-center gap-3 py-3.5 px-4.5 cursor-pointer font-outfit text-left text-eco-ink transition-colors duration-200 hover:bg-eco-moss/30">
-            <div class="size-8 rounded-lg bg-eco-moss flex items-center justify-center shrink-0">
-              <GoogleIcon width={16} height={16} />
-            </div>
-            <span class="flex-1 font-medium text-[0.85rem]">Kalendarz Google</span>
-            <span class="group-open:rotate-180 text-eco-muted transition-transform duration-300 shrink-0">
-              <ChevronDown size={16} stroke-width={2} />
-            </span>
-          </summary>
-
-          <div class="px-4.5 pb-4.5 border-t border-eco-moss">
-            <div class="flex gap-3 pt-3.5">
-              <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">1</span>
-              <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
-                Otwórz <a href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" class="text-eco-sage font-medium">calendar.google.com</a> w przeglądarce internetowej (subskrypcji nie można dodać w aplikacji Kalendarz Google).
-              </p>
-            </div>
-            <div class="flex gap-3 pt-3.5">
-              <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">2</span>
-              <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
-                W panelu po lewej kliknij <strong class="font-medium">+</strong> obok <strong class="font-medium">Inne kalendarze</strong> &rarr; <strong class="font-medium">Z adresu URL</strong>.
-              </p>
-            </div>
-            <div class="flex gap-3 pt-3.5">
-              <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">3</span>
-              <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
-                Wklej adres URL kalendarza:<br/>
-                <code class="inline-block mt-1 py-0.5 px-2 bg-eco-moss rounded-[5px] font-mono text-[0.65rem] text-eco-sage-dark break-all select-all font-medium">{icsUrl}</code>
-              </p>
-            </div>
-            <div class="flex gap-3 pt-3.5">
-              <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">4</span>
-              <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
-                Kliknij <strong class="font-medium">Dodaj kalendarz</strong>. Google będzie automatycznie synchronizował harmonogram (moze to zajac do 24h).
-              </p>
-            </div>
+      <!-- Google Calendar disclosure -->
+      <details class="group bg-eco-cream border border-eco-moss rounded-xl overflow-hidden">
+        <summary class="w-full flex items-center gap-3 py-3.5 px-4.5 cursor-pointer font-outfit text-left text-eco-ink transition-colors duration-200 hover:bg-eco-moss/30">
+          <div class="size-8 rounded-lg bg-eco-moss flex items-center justify-center shrink-0">
+            <GoogleIcon width={16} height={16} />
           </div>
-        </details>
-      </section>
+          <span class="flex-1 font-medium text-[0.85rem]">Kalendarz Google</span>
+          <span class="group-open:rotate-180 text-eco-muted transition-transform duration-300 shrink-0">
+            <ChevronDown size={16} stroke-width={2} />
+          </span>
+        </summary>
+
+        <div class="px-4.5 pb-4.5 border-t border-eco-moss">
+          <div class="flex gap-3 pt-3.5">
+            <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">1</span>
+            <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+              Otwórz <a href="https://calendar.google.com" target="_blank" rel="noopener noreferrer" class="text-eco-sage font-medium">calendar.google.com</a> w przeglądarce internetowej (subskrypcji nie można dodać w aplikacji Kalendarz Google).
+            </p>
+          </div>
+          <div class="flex gap-3 pt-3.5">
+            <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">2</span>
+            <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+              W panelu po lewej kliknij <strong class="font-medium">+</strong> obok <strong class="font-medium">Inne kalendarze</strong> &rarr; <strong class="font-medium">Z adresu URL</strong>.
+            </p>
+          </div>
+          <div class="flex gap-3 pt-3.5">
+            <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">3</span>
+            <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+              Wklej adres URL kalendarza:<br/>
+              <code class="inline-block mt-1 py-0.5 px-2 bg-eco-moss rounded-[5px] font-mono text-[0.65rem] text-eco-sage-dark break-all select-all font-medium">{icsUrl}</code>
+            </p>
+          </div>
+          <div class="flex gap-3 pt-3.5">
+            <span class="size-[22px] rounded-full bg-eco-moss text-eco-sage-dark text-[0.65rem] font-semibold flex items-center justify-center shrink-0 mt-0.5">4</span>
+            <p class="text-[0.78rem] leading-relaxed text-eco-ink font-light">
+              Kliknij <strong class="font-medium">Dodaj kalendarz</strong>. Google będzie automatycznie synchronizował harmonogram (moze to zajac do 24h).
+            </p>
+          </div>
+        </div>
+      </details>
+    </section>
 
 
-      <!-- Footer -->
-      <footer class="animate-soft-in animation-delay-550 text-center text-[0.68rem] text-eco-muted leading-[1.8]">
-        <p>Dane ze <a href="https://boguty-pianki.pl" target="_blank" rel="noopener noreferrer" class="text-eco-sage no-underline font-medium hover:underline">strony Urzędu Gminy Boguty-Pianki</a></p>
-        <p>Projekt: <a href="https://zochow.ski" target="_blank" rel="noopener noreferrer" class="text-eco-sage no-underline font-medium hover:underline">zochow.ski</a></p>
-      </footer>
+    <!-- Footer -->
+    <footer class="animate-soft-in animation-delay-550 text-center text-[0.68rem] text-eco-muted leading-[1.8]">
+      <p>Dane ze <a href="https://boguty-pianki.pl" target="_blank" rel="noopener noreferrer" class="text-eco-sage no-underline font-medium hover:underline">strony Urzędu Gminy Boguty-Pianki</a></p>
+      <p>Projekt: <a href="https://zochow.ski" target="_blank" rel="noopener noreferrer" class="text-eco-sage no-underline font-medium hover:underline">zochow.ski</a></p>
+    </footer>
 
-    </main>
+  </main>
 
-    <script is:inline define:vars={{ icsUrl }}>
-      document.getElementById('copy-btn').addEventListener('click', async function() {
-        await navigator.clipboard.writeText(icsUrl);
-        const btn = this;
-        btn.innerHTML = '&#10003; Skopiowano';
-        btn.style.background = '#7a8c6e';
-        btn.style.color = 'white';
-        setTimeout(() => {
-          btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Kopiuj';
-          btn.style.background = '';
-          btn.style.color = '';
-        }, 2000);
-      });
-    </script>
-  </NewLayout>
+  <script is:inline define:vars={{ icsUrl }}>
+    document.getElementById('copy-btn').addEventListener('click', async function() {
+      await navigator.clipboard.writeText(icsUrl);
+      const btn = this;
+      btn.innerHTML = '&#10003; Skopiowano';
+      btn.style.background = '#7a8c6e';
+      btn.style.color = 'white';
+      setTimeout(() => {
+        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Kopiuj';
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 2000);
+    });
+  </script>
+</NewLayout>

@@ -4,8 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: "Geist Variable", "sans-serif";
-  --font-mono: "Sometype Mono", "monospace";
+  --font-sans: var(--font-geist);
+  --font-mono: var(--font-sometype-mono);
 }
 
 :root {
@@ -94,8 +94,11 @@
 
   --color-dunno: rgba(196, 168, 130, 0.2);
 
-  --font-fraunces: "Fraunces", serif;
-  --font-outfit: "Outfit", sans-serif;
+  /* --font-fraunces: "Fraunces", serif; */
+  /* --font-outfit: "Outfit", sans-serif; */
+
+  --font-fraunces: var(--astro-font-fraunces);
+  --font-outfit: var(--astro-font-outfit);
 
   /* eco landing — fluid type (→ text-eco-headline, text-eco-deck) */
   --text-eco-headline: clamp(2rem, 5.5vw, 3rem);
@@ -186,7 +189,9 @@
   }
 
   .font-fraunces-accent {
-    font-variation-settings: "SOFT" 100, "WONK" 1;
+    font-variation-settings:
+      "SOFT" 100,
+      "WONK" 1;
   }
 }
 

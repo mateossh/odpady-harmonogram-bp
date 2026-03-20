@@ -3,7 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import umami from "@yeskunall/astro-umami";
 import { stripHTMLComments } from "@zade/vite-plugin-strip-html-comments";
 import og from "astro-og";
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -24,4 +24,27 @@ export default defineConfig({
   server: {
     allowedHosts: ["odpady.zochow.ski"],
   },
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: "Geist",
+      cssVariable: "--font-geist",
+    },
+    {
+      provider: fontProviders.google(),
+      name: "Fraunces",
+      cssVariable: "--astro-font-fraunces",
+    },
+
+    {
+      provider: fontProviders.google(),
+      name: "Outfit",
+      cssVariable: "--astro-font-outfit",
+    },
+    {
+      provider: fontProviders.google(),
+      name: "Sometype Mono",
+      cssVariable: "--font-sometype-mono",
+    },
+  ],
 });
