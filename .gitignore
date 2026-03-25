@@ -43,3 +43,7 @@ TODO
 .sst
 
 .codemogger
+
+# playwright
+playwright-report
+test-results

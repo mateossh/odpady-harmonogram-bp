@@ -14,7 +14,8 @@
     "lint": "oxlint -c .config/.oxlintrc.jsonc --type-aware --type-check --deny-warnings --report-unused-disable-directives",
     "lint:fix": "oxlint -c .config/.oxlintrc.jsonc --fix --type-aware --type-check --deny-warnings --report-unused-disable-directives",
     "preview": "astro preview",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "e2e:prod": "TEST_PROD=1 playwright test"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.6",
