@@ -1,14 +1,11 @@
-import { readFile } from "node:fs/promises";
-
 import type { APIRoute } from "astro";
 
 import { generateICS, parseWasteCollections } from "../lib/ics";
 
-const DATA_URL = new URL("../../data.jsonl", import.meta.url);
+import dataJsonl from "../../data.jsonl?raw";
 
 async function buildIcs(): Promise<string> {
-  const fileContent = await readFile(DATA_URL, "utf-8");
-  const collections = parseWasteCollections(fileContent);
+  const collections = parseWasteCollections(dataJsonl);
   return generateICS(collections);
 }
 
@@ -19,7 +16,7 @@ export const GET: APIRoute = async () => {
       status: 200,
       headers: {
         "Content-Type": "text/calendar; charset=utf-8",
-        "Content-Disposition": 'attachment; filename="harmonogram-odpadow.ics"',
+        "Content-Disposition": 'attachment; filename="schedule.ics"',
         "Cache-Control": "public, max-age=3600",
       },
     });

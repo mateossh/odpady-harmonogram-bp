@@ -42,6 +42,8 @@ export default $config({
 
       deploymentConfigs: {
         preview: {
+          compatibilityFlags: ["nodejs_compat"],
+          compatibilityDate: "2026-03-25",
           envVars: {
             SKIP_DEPENDENCY_INSTALL: {
               type: "plain_text",
@@ -55,6 +57,8 @@ export default $config({
         },
 
         production: {
+          compatibilityFlags: ["nodejs_compat"],
+          compatibilityDate: "2026-03-25",
           envVars: {
             SKIP_DEPENDENCY_INSTALL: {
               type: "plain_text",
