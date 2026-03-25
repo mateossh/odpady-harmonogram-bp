@@ -81,7 +81,11 @@ export function generateICS(collections: WasteCollection[]): string {
     const descriptionSource =
       collection.description ?? collection.kind ?? "Odbiór odpadów";
     const description = escapeICSText(
-      `🗑️ Harmonogram odbioru odpadów\\n\\nRodzaje odpadów: ${descriptionSource}\\n\\nGodziny odbioru: ${collection.timeRange}`,
+      `🗑️ Harmonogram odbioru odpadów
+
+Rodzaje odpadów: ${descriptionSource}
+
+Godziny odbioru: ${collection.timeRange}`,
     );
 
     ics +=
