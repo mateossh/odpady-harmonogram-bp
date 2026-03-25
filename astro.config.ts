@@ -7,6 +7,7 @@ import { defineConfig, fontProviders } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
+  // this is still needed in astro/sitemap
   site: "https://odpady.zochow.ski",
   vite: {
     plugins: [tailwindcss()],

@@ -68,6 +68,10 @@ export default $config({
               type: "plain_text",
               value: "1.3.6",
             },
+            SITE_URL: {
+              type: "plain_text",
+              value: "odpady.zochow.ski",
+            },
           },
         },
       },

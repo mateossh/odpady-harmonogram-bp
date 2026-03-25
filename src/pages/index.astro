@@ -6,10 +6,12 @@ import { Calendar, Copy, Leaf, Recycle, BookOpen, ChevronDown } from "@lucide/as
 
 import NewLayout from '../layouts/NewLayout.astro';
 
-const { site } = Astro;
+const CF_PAGES_HOSTNAME = process.env.CF_PAGES_URL?.replace("https://", "");
+const hostname = (process.env.SITE_URL || CF_PAGES_HOSTNAME || `localhost:${Astro.url.port}`)
 
-const icsUrl = `${site!.origin}/schedule.ics`;
-const webcalUrl = `webcal://${site!.hostname}/schedule.ics`;
+
+const icsUrl = `${hostname}/schedule.ics`;
+const webcalUrl = `webcal://${hostname}/schedule.ics`;
 const googleUrl = `https://calendar.google.com/calendar/r?cid=${encodeURIComponent(webcalUrl)}`;
 
 const getIcon = (iconName: string, props = {}) => {
